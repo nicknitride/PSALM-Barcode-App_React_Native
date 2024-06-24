@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "pardines-barcode",
-    "slug": "pardines-barcode",
+    "name": "PSALM Barcode",
+    "slug": "pardines-barcode-intern-proj",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/qr-code-scan-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {

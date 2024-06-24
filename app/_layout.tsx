@@ -1,6 +1,4 @@
 import { Stack } from "expo-router";
-import Home from "./(tabs)/Home";
-
 export default function RootLayout() {
   return (
     <Stack>
