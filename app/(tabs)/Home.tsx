@@ -1,64 +1,72 @@
-import { Text, View,StyleSheet,TouchableOpacity } from "react-native";
-import Button from "../styled-components/Button";
-import { useState } from "react";
 import { CameraView, useCameraPermissions } from 'expo-camera';
-import { BarcodeScanningResult } from "expo-camera";
+import { useState } from 'react';
+import {StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Button from "../styled-components/Button"
 
-export default function Home() {
-  const [currentlyScanning, setCurrentlyScanning] = useState(false);
+export default function App() {
   const [facing, setFacing] = useState('back');
-  // const [permission, requestPermission] = useCameraPermissions();
+  const [permission, requestPermission] = useCameraPermissions();
+  const [detectedQR,setDetectedQR] = useState(false)
+  const [QRValue, setQRValue] = useState('')
+
+  if (!permission) {
+    // Camera permissions are still loading.
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet.
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
+      </View>
+    );
+  }
 
   function toggleCameraFacing() {
     setFacing(current => (current === 'back' ? 'front' : 'back'));
   }
 
-  if(currentlyScanning===false){
   return (
-    <>
-        <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor:"white"
-      }}
-    >
-      <View style={{width:300}}>
-      <Text style={{color:"black",margin:5}}>Import a copy of your Inventory List to Begin</Text>
-      <Text style={{margin:5}}>Note: Importing clears your edit history and resets the app</Text>
-      </View>
-      <View style={{flexDirection:"row"}}>
-      <Button title="Scan Barcode" onPress={()=>{setCurrentlyScanning(true)}}></Button>
-      <Button title="Import CSV"></Button>
-      </View>
-    </View>
-    </>
-  );
-
-  }else{
-    return(
-      <>
-      <View>
-      <Button title="Stop Scanning" onPress={()=>{setCurrentlyScanning(false)}}></Button>
-      </View>
-      <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing} barcodeScannerSettings={{barcodeTypes:['ean-13','qr']}}>
+    <View style={styles.container}>
+      <CameraView style={styles.camera} facing={facing} barcodeScannerSettings={{
+    barcodeTypes: ["qr",'upc_a','code128','codabar','itf14','code93','code39','datamatrix','upc_e','pdf417','ean8','ean13','aztec'],
+  }}
+  onBarcodeScanned={(result)=>{
+    if (QRValue === ''){
+      console.log(result)
+      setDetectedQR(true)
+      setQRValue(`${result.raw}`)
+    }
+    }
+    }>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
         </View>
       </CameraView>
+      {QRValue && <>
+      <View style={{margin:20}}>
+        <Text style = {{margin:5}}>Detected Item no.: {QRValue}</Text>
+        <View style={{flexDirection:"row"}}>
+        <Button title='Edit Detected Item' onPress={()=>{console.log("Submit clicked for: "+QRValue)}}></Button>
+        <Button title='Scan Another Instead' onPress={()=>{
+        setQRValue('') 
+        setDetectedQR(false)}}></Button>
+        </View>
+      </View>
+      </>}
+     
     </View>
-      </>
-    );
-  }
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   camera: {
     flex: 1,

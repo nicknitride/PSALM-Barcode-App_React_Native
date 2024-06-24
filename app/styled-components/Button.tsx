@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   text: {
-    fontSize: 16,
+    fontSize: 10,
     lineHeight: 21,
     fontWeight: 'bold',
     letterSpacing: 0.25,
