@@ -1,6 +1,7 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState } from 'react';
-import {StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {router} from 'expo-router'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Button from "../styled-components/Button"
 
 export default function App() {
@@ -13,13 +14,12 @@ export default function App() {
     // Camera permissions are still loading.
     return <View />;
   }
-
   if (!permission.granted) {
     // Camera permissions are not granted yet.
     return (
       <View style={styles.container}>
         <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Button onPress={requestPermission} title="Grant Camera Permissions" />
       </View>
     );
   }
@@ -30,35 +30,44 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing} barcodeScannerSettings={{
-    barcodeTypes: ["qr",'upc_a','code128','codabar','itf14','code93','code39','datamatrix','upc_e','pdf417','ean8','ean13','aztec'],
-  }}
-  onBarcodeScanned={(result)=>{
-    if (QRValue === ''){
-      console.log(result)
-      setDetectedQR(true)
-      setQRValue(`${result.raw}`)
-    }
-    }
-    }>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </CameraView>
+      {!QRValue && <>
+        <View style={styles.innerContainer}>
+        <CameraView style={styles.camera} facing={facing} barcodeScannerSettings={{
+        barcodeTypes: ["qr",'upc_a','code128','codabar','itf14','code93','code39','datamatrix','upc_e','pdf417','ean8','ean13','aztec'],
+        }}
+        onBarcodeScanned={(result)=>{
+        if (QRValue === ''){
+        console.log(result)
+        setDetectedQR(true)
+        setQRValue(`${result.raw}`)
+        }
+        }
+        }>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+              <Text style={styles.buttontext}>Flip Camera</Text>
+            </TouchableOpacity>
+          </View>
+        </CameraView>
+
+</View>
+      </>}
+
       {QRValue && <>
       <View style={{margin:20}}>
-        <Text style = {{margin:5}}>Detected Item no.: {QRValue}</Text>
+        <Text style = {{margin:5,fontSize:20,fontWeight:'bold'}}>Detected Item no.: {QRValue}</Text>
         <View style={{flexDirection:"row"}}>
-        <Button title='Edit Detected Item' onPress={()=>{console.log("Submit clicked for: "+QRValue)}}></Button>
+        <Button title='Edit Detected Item' onPress={()=>{
+          console.log("Submit clicked for: "+QRValue)
+          router.push(`/itemview/${QRValue}`)
+        }
+      }></Button>
         <Button title='Scan Another Instead' onPress={()=>{
         setQRValue('') 
         setDetectedQR(false)}}></Button>
         </View>
       </View>
       </>}
-     
     </View>
   );
 }
@@ -67,6 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems:'center'
   },
   camera: {
     flex: 1,
@@ -81,10 +91,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'flex-end',
     alignItems: 'center',
+    backgroundColor:'black',
+    borderRadius:20,
+    paddingHorizontal:5,
+    paddingVertical:10
   },
-  text: {
-    fontSize: 24,
+  buttontext: {
+    fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
   },
+  innerContainer:{
+    height:'80%',
+    width: '80%'
+  }
 });
