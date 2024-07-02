@@ -58,6 +58,7 @@ export default function dbtestpage(){
                 );
             `);
             console.log("Insertion successful");
+
         } catch (error) {
             setDisplay(JSON.stringify(error))
         }
@@ -74,7 +75,7 @@ export default function dbtestpage(){
         <Stack.Screen options={{headerTitle:"DB Testing Page"}}/>
         <Button title="Get Items" onPress={()=>{
             showData()}}></Button>
-        <Button title="Insert Data" onPress={()=>{addInitial}} />
+        <Button title="Insert Data" onPress={()=>{addInitial()}} />
         <Text>{display}</Text>
         </View></>
         );

@@ -33,7 +33,7 @@ export default function TestParsePage(){
             console.log("Permission not granted");
           }
         } else {
-          await Sharing.shareAsync(FileSystem.documentDirectory + 'SQLite/example.db');
+          await Sharing.shareAsync(FileSystem.documentDirectory + 'SQLite/exported.csv');
         }
       }
 
