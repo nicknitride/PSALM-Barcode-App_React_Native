@@ -74,8 +74,10 @@ export default function dbtestpage(){
         <Stack.Screen options={{headerTitle:"DB Testing Page"}}/>
         <Button title="Get Items" onPress={()=>{
             showData()}}></Button>
+        <Button title="Insert Data" onPress={()=>{addInitial}} />
         <Text>{display}</Text>
-        </View></>)
+        </View></>
+        );
 }
 
 /* 
