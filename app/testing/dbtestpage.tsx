@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { Stack } from "expo-router";
 import { useState, useEffect } from "react";
 import * as SQLite from "expo-sqlite";
@@ -129,7 +129,9 @@ export default function dbtestpage() {
                               addInitial();
                          }}
                     />
-                    <Text>{display}</Text>
+                    <ScrollView>
+                         <Text>{display}</Text>
+                    </ScrollView>
                </View>
           </>
      );
