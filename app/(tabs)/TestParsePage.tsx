@@ -36,6 +36,7 @@ export default function TestParsePage() {
      };
      initDb();
 
+     const [csv_string, setCsv_String] = useState();
      const [globalFileContent, SetGlobalFileContent] = useState();
      const [fileLocation, setFileLocation] = useState();
      const [docReqResult, setDocRequest] =
@@ -87,27 +88,33 @@ export default function TestParsePage() {
                 );`);
      };
 
+     const sqlToCsv = () => {
+          const allData = db.getAllSync(`SELECT * FROM item;`);
+          let processedCsv = Papa.unparse(allData)
+     };
+
      const exportDb = async () => {
+          // sqlToCsv();
           if (Platform.OS === "android") {
                const permissions =
                     await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
                if (permissions.granted) {
-                    const base64 = await FileSystem.readAsStringAsync(
-                         FileSystem.documentDirectory + "SQLite/example.db",
-                         {
-                              encoding: FileSystem.EncodingType.Base64,
-                         }
-                    );
-
                     await FileSystem.StorageAccessFramework.createFileAsync(
                          permissions.directoryUri,
-                         "example.db",
-                         "application/octet-stream"
+                         "example.csv",
+                         "text/csv"
                     )
                          .then(async (uri) => {
-                              await FileSystem.writeAsStringAsync(uri, base64, {
-                                   encoding: FileSystem.EncodingType.Base64,
-                              });
+                          const allData = db.getAllSync(`SELECT * FROM item;`);
+                          let processedCsv = Papa.unparse(allData)
+                              await FileSystem.writeAsStringAsync(
+                                   uri,
+                                   processedCsv,
+                                   {
+                                    encoding: FileSystem.EncodingType.UTF8,
+                                   }
+                              );
+                              console.log("Finished Execution","CSV String: " + processedCsv);
                          })
                          .catch((e) => console.log(e));
                } else {
@@ -127,12 +134,12 @@ export default function TestParsePage() {
                     copyToCacheDirectory: true,
                });
                setDocRequest(docRequest);
-               console.log(docRequest);
-               console.log(docRequest.output);
-               console.log(docRequest.assets[0].uri);
+               //  console.log(docRequest);
+               //  console.log(docRequest.output);
+               //  console.log(docRequest.assets[0].uri);
                if (docRequest.assets[0].uri !== null) {
                     setFileLocation(docRequest.assets[0].uri);
-                    console.log("File Location: " + fileLocation);
+                    // console.log("File Location: " + fileLocation);
                     const fileContent = await FileSystem.readAsStringAsync(
                          docRequest.assets[0].uri
                     );
@@ -143,7 +150,7 @@ export default function TestParsePage() {
                          skipEmptyLines: true,
                          complete: (results: any) => {
                               db.execAsync("DELETE FROM item;");
-                              console.log("Parsed Data: ", results);
+                              // console.log("Parsed Data: ", results);
                               SetGlobalFileContent(results.data);
                               // console.log(results.data.length);
                               for (let i = 0; i < results.data.length; i++) {
@@ -212,7 +219,7 @@ export default function TestParsePage() {
                <Button
                     title="Display Data in Server"
                     onPress={() => {
-                         console.log("Clicked display data", databaseData);
+                         //  console.log("Clicked display data", databaseData);
                          getAllData();
                     }}
                ></Button>

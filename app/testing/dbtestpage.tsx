@@ -104,8 +104,6 @@ export default function dbtestpage() {
      //
      const sqlToCsv = async () => {
           const allData = await db.getAllSync(`SELECT * FROM item`);
-          let data = ``;
-          //   console.log(JSON.stringify(allData));
           var csv = Papa.unparse(allData);
           console.log(csv);
      };
