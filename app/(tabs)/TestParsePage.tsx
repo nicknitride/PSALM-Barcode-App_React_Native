@@ -88,13 +88,7 @@ export default function TestParsePage() {
                 );`);
      };
 
-     const sqlToCsv = () => {
-          const allData = db.getAllSync(`SELECT * FROM item;`);
-          let processedCsv = Papa.unparse(allData)
-     };
-
      const exportDb = async () => {
-          // sqlToCsv();
           if (Platform.OS === "android") {
                const permissions =
                     await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
