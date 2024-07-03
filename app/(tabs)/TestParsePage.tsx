@@ -14,26 +14,10 @@ import * as DocumentPicker from "expo-document-picker";
 import Papa from "papaparse";
 import * as Sharing from "expo-sharing";
 import { router } from "expo-router";
+import { initDb, insertDataDbSingle } from "../DatabaseFunctions";
 
 export default function TestParsePage() {
      const db = SQLite.openDatabaseSync("test.db");
-     const initDb = () => {
-          console.log(db);
-          db.execSync(`
-    CREATE TABLE IF NOT EXISTS item (Article_Item TEXT,
-    Description TEXT,
-    Old_Property_Number INTEGER,
-    New_Property_Number INTEGER PRIMARY KEY,
-    Unit_of_Measure TEXT,
-    Unit_Value TEXT,
-    Quantity_per_Property_Card TEXT,
-    Quantity_per_Physical_Count INTEGER,
-    Location_Whereabouts TEXT,
-    Condition TEXT,
-    Remarks TEXT
-    );
-   `);
-     };
      initDb();
 
      const [csv_string, setCsv_String] = useState();
@@ -47,47 +31,6 @@ export default function TestParsePage() {
           const allData = db.getAllSync("select * from item");
           setDatabaseData(JSON.stringify(allData));
      };
-     const insertDataDbSingle = (
-          articleItem: any,
-          Desc: any,
-          Old_Prop_Num: number,
-          New_Prop_Num: number,
-          Unit_of_Measure: string,
-          Unit_Value: string,
-          Quantity_per_Property_Card: string,
-          Quantity_per_Physical_Count: number,
-          Location_Whereabouts: string,
-          Condition: string,
-          Remarks: string
-     ) => {
-          db.execSync(`INSERT INTO item (
-                    Article_Item,
-                    Description,
-                    Old_Property_Number,
-                    New_Property_Number,
-                    Unit_of_Measure,
-                    Unit_Value,
-                    Quantity_per_Property_Card,
-                    Quantity_per_Physical_Count,
-                    Location_Whereabouts,
-                    Condition,
-                    Remarks
-                )
-                VALUES (
-                    "${articleItem}",
-                    "${Desc}",
-                    ${Old_Prop_Num},
-                    ${New_Prop_Num},
-                    "${Unit_of_Measure}",
-                    "${Unit_Value}",
-                    "${Quantity_per_Property_Card}",
-                    "${Quantity_per_Physical_Count}",
-                    "${Location_Whereabouts}",
-                    "${Condition}",
-                    "${Remarks}"
-                );`);
-     };
-
      const exportDb = async () => {
           if (Platform.OS === "android") {
                const permissions =
@@ -99,16 +42,20 @@ export default function TestParsePage() {
                          "text/csv"
                     )
                          .then(async (uri) => {
-                          const allData = db.getAllSync(`SELECT * FROM item;`);
-                          let processedCsv = Papa.unparse(allData)
+                              const allData =
+                                   db.getAllSync(`SELECT * FROM item;`);
+                              let processedCsv = Papa.unparse(allData);
                               await FileSystem.writeAsStringAsync(
                                    uri,
                                    processedCsv,
                                    {
-                                    encoding: FileSystem.EncodingType.UTF8,
+                                        encoding: FileSystem.EncodingType.UTF8,
                                    }
                               );
-                              console.log("Finished Execution","CSV String: " + processedCsv);
+                              console.log(
+                                   "Finished Execution",
+                                   "CSV String: " + processedCsv
+                              );
                          })
                          .catch((e) => console.log(e));
                } else {
@@ -176,18 +123,7 @@ export default function TestParsePage() {
           } catch (error) {
                console.log(error);
           }
-          // const base64 = await FileSystem.readAsStringAsync(
-          //     String(fileLocation),
-          //     {
-          //       encoding: FileSystem.EncodingType.Base64
-          //     }
-          //   );
-          // Replace with an actual string composed of papaparse data
 
-          // Uncomment Below later on
-          //   await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'SQLite/example.db', base64, { encoding: FileSystem.EncodingType.Base64 });
-          //   (await db).closeAsync
-          //   setDb(SQLite.openDatabaseAsync('example.db'));
      };
      return (
           <View>

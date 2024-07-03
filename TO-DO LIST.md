@@ -20,8 +20,8 @@ TO-DO LIST:
      -    modify export name to include date and time
 -    GENERAL
      -    clean up UI
-     -    create database function javascript page
-     -    initialize databases on app load (Home.tsx)
+     -    create database function javascript page ✅
+     -    initialize databases on app load (Home.tsx) ✅
 Clarifications:
 -    Dropdown menu for "Conditions"
 -    Anything else needs to be edited

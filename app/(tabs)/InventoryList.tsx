@@ -33,7 +33,6 @@ export default function InventoryList() {
      initDb();
      const showData = () => {
           const allData = db.getAllSync(`SELECT * FROM recently_scanned`);
-          console.log(allData);
           setDisplay(JSON.stringify(allData));
      };
      return (

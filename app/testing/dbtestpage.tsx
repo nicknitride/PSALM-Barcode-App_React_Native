@@ -3,27 +3,10 @@ import { Stack } from "expo-router";
 import { useState, useEffect } from "react";
 import * as SQLite from "expo-sqlite";
 import Button from "../styled-components/Button";
-import Papa from "papaparse";
+import { sqlToCsv, initDb } from "../DatabaseFunctions";
 
 export default function dbtestpage() {
      const db = SQLite.openDatabaseSync("test.db");
-     const initDb = async () => {
-          console.log(db);
-          await db.execAsync(`
-        CREATE TABLE IF NOT EXISTS item (Article_Item TEXT,
-        Description TEXT,
-        Old_Property_Number INTEGER,
-        New_Property_Number INTEGER PRIMARY KEY,
-        Unit_of_Measure TEXT,
-        Unit_Value TEXT,
-        Quantity_per_Property_Card TEXT,
-        Quantity_per_Physical_Count INTEGER,
-        Location_Whereabouts TEXT,
-        Condition TEXT,
-        Remarks TEXT
-        );
-       `);
-     };
      initDb();
      const [display, setDisplay] = useState<any>();
 
@@ -92,7 +75,6 @@ export default function dbtestpage() {
 
      const showData = () => {
           const allData = db.getAllSync(`SELECT * FROM item`);
-          console.log(allData);
           setDisplay(JSON.stringify(allData));
      };
 
@@ -102,11 +84,11 @@ export default function dbtestpage() {
      // }
 
      //
-     const sqlToCsv = async () => {
-          const allData = await db.getAllSync(`SELECT * FROM item`);
-          var csv = Papa.unparse(allData);
-          console.log(csv);
-     };
+     // const sqlToCsv = async () => {
+     //      const allData = await db.getAllSync(`SELECT * FROM item`);
+     //      var csv = Papa.unparse(allData);
+     //      console.log(csv);
+     // };
 
      return (
           <>
