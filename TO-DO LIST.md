@@ -1,0 +1,27 @@
+TO-DO LIST:
+-    Camera Screen
+     -    (itemview/[id].tsx)
+     -    add a db query (TABLE item) that retrieves the info based on the scanned id
+     -    create a form to edit the scanned info
+     -    submit button should save to TABLE recently_scanned
+          -    should redirect user to PAGE home
+-    Inventory
+     -    lists each recently_scanned item (clickable)
+     -    Includes:
+          -    article item, description, old + new id
+          -    Edit/Delete Button
+-    New Page
+     -    Overview: Querys from TABLE recently_scanned (attached to clickable inventory items)
+     -    Note: Edits the scanned items selected from TABLE recently_scanned
+-    Import CSV
+     -    note that Import CSV clears all tables in db
+-    Export CSV
+     -    replace the db being exported with TABLE recently_scanned
+     -    modify export name to include date and time
+-    GENERAL
+     -    clean up UI
+     -    create database function javascript page
+     -    initialize databases on app load (Home.tsx)
+Clarifications:
+-    Dropdown menu for "Conditions"
+-    Anything else needs to be edited
