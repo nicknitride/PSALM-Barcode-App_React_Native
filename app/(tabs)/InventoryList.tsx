@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Button from "../styled-components/Button";
 import { startDb, initDb } from "../DatabaseFunctions";
 import ItemCard  from "../styled-components/ItemCard";
+import { dbEntry } from "../types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function InventoryList() {
      const [display, setDisplay] = useState<string>("");
@@ -22,20 +24,20 @@ export default function InventoryList() {
      const allData = db.getAllSync(`SELECT * FROM item`);
 
      return (
-          <View
+          <SafeAreaView
                style={{
                     flex: 1,
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "white",
+                    backgroundColor: "white"
                }}
           >
-               <ScrollView>
+               <ScrollView style={{flex:1}} >
                     <Text style={{ color: "black" }}></Text>
                     {allData.map((item) => (
                          <>
-                         <Text>{JSON.stringify(item)}</Text>
-                         {/* <ItemCard items={item}></ItemCard> */}
+                         {/* <Text>{JSON.stringify(item)}</Text> */}
+                         <ItemCard items={item}></ItemCard>
                          </>
                     ))}
                     {/* {display === null && (
@@ -49,12 +51,12 @@ export default function InventoryList() {
                          </>
                     )} */}
                </ScrollView>
-               <Button
+               {/* <Button
                     title="Check Button"
                     onPress={() => {
                          showData();
                     }}
-               ></Button>
-          </View>
+               ></Button> */}
+          </SafeAreaView>
      );
 }
