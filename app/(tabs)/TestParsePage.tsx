@@ -91,10 +91,11 @@ export default function TestParsePage() {
                          skipEmptyLines: true,
                          complete: (results: any) => {
                               db.execAsync("DELETE FROM item;");
-                              // console.log("Parsed Data: ", results);
+                              console.log("Parsed Data: ", results);
                               SetGlobalFileContent(results.data);
                               // console.log(results.data.length);
                               for (let i = 0; i < results.data.length; i++) {
+                                   console.log("Beginning data insertion")
                                    insertDataDbSingle(
                                         results.data[i].Article_Item,
                                         results.data[i].Description,
@@ -110,6 +111,7 @@ export default function TestParsePage() {
                                         results.data[i].Condition,
                                         results.data[i].Remarks
                                    );
+                                   console.log("Importing entry number: "+String(i))
                               }
                               console.log("Completed import");
                          }, //Use  a for each to insert into the sqlite db
