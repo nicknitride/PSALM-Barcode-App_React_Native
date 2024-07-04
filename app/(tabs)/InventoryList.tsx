@@ -33,7 +33,10 @@ export default function InventoryList() {
                <ScrollView>
                     <Text style={{ color: "black" }}></Text>
                     {allData.map((item) => (
+                         <>
+                         <Text>{JSON.stringify(item)}</Text>
                          <ItemCard items={item}></ItemCard>
+                         </>
                     ))}
                     {/* {display === null && (
                          <>
