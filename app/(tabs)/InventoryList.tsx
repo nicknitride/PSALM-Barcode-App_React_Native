@@ -3,7 +3,7 @@ import * as SQLite from "expo-sqlite";
 import { useState, useEffect } from "react";
 import Button from "../styled-components/Button";
 import { startDb, initDb } from "../DatabaseFunctions";
-import { ItemCard } from "../styled-components";
+import ItemCard  from "../styled-components/ItemCard";
 
 export default function InventoryList() {
      const [display, setDisplay] = useState<string>("");
