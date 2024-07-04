@@ -35,7 +35,7 @@ export default function InventoryList() {
                     {allData.map((item) => (
                          <>
                          <Text>{JSON.stringify(item)}</Text>
-                         <ItemCard items={item}></ItemCard>
+                         {/* <ItemCard items={item}></ItemCard> */}
                          </>
                     ))}
                     {/* {display === null && (
