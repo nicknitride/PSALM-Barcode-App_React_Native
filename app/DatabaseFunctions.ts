@@ -11,24 +11,24 @@ export const initDb = async () => {
     await db.execAsync(`
         CREATE TABLE IF NOT EXISTS item (Article_Item TEXT,
         Description TEXT,
-        Old_Property_Number INTEGER,
-        New_Property_Number INTEGER PRIMARY KEY,
+        Old_Property_Number TEXT,
+        New_Property_Number TEXT PRIMARY KEY,
         Unit_of_Measure TEXT,
         Unit_Value TEXT,
         Quantity_per_Property_Card TEXT,
-        Quantity_per_Physical_Count INTEGER,
+        Quantity_per_Physical_Count TEXT,
         Location_Whereabouts TEXT,
         Condition TEXT,
         Remarks TEXT
         );
         CREATE TABLE IF NOT EXISTS recent_items (Article_Item TEXT,
         Description TEXT,
-        Old_Property_Number INTEGER,
-        New_Property_Number INTEGER PRIMARY KEY,
+        Old_Property_Number TEXT,
+        New_Property_Number TEXT PRIMARY KEY,
         Unit_of_Measure TEXT,
         Unit_Value TEXT,
         Quantity_per_Property_Card TEXT,
-        Quantity_per_Physical_Count INTEGER,
+        Quantity_per_Physical_Count TEXT,
         Location_Whereabouts TEXT,
         Condition TEXT,
         Remarks TEXT
@@ -37,14 +37,14 @@ export const initDb = async () => {
 };
 
 export const insertDataDbSingle = (
-    articleItem: any,
-    Desc: any,
-    Old_Prop_Num: number,
-    New_Prop_Num: number,
+    articleItem: string,
+    Desc: string,
+    Old_Prop_Num: string,
+    New_Prop_Num: string,
     Unit_of_Measure: string,
     Unit_Value: string,
     Quantity_per_Property_Card: string,
-    Quantity_per_Physical_Count: number,
+    Quantity_per_Physical_Count: string,
     Location_Whereabouts: string,
     Condition: string,
     Remarks: string
@@ -66,8 +66,8 @@ export const insertDataDbSingle = (
           VALUES (
               "${articleItem}",
               "${Desc}",
-              ${Old_Prop_Num},
-              ${New_Prop_Num},
+              "${Old_Prop_Num}",
+              "${New_Prop_Num}",
               "${Unit_of_Measure}",
               "${Unit_Value}",
               "${Quantity_per_Property_Card}",

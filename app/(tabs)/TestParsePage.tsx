@@ -76,7 +76,7 @@ export default function TestParsePage() {
                });
                setDocRequest(docRequest);
                //  console.log(docRequest);
-               //  console.log(docRequest.output);
+                // console.log(docRequest.output);
                //  console.log(docRequest.assets[0].uri);
                if (docRequest.assets[0].uri !== null) {
                     setFileLocation(docRequest.assets[0].uri);

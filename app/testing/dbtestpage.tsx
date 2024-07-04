@@ -100,7 +100,6 @@ export default function dbtestpage() {
                          title="Get Items"
                          onPress={() => {
                               showData();
-                              sqlToCsv();
                          }}
                     ></Button>
                     <Button

@@ -17,6 +17,7 @@ export default function itemEditView(){
 
     const {id} = useLocalSearchParams();
     const correspondingRow = db.getFirstSync<dbEntry>(`SELECT * FROM item WHERE New_Property_Number = ${id}`);
+    console.log(correspondingRow)
     return(
         <>
         <View>
@@ -32,7 +33,8 @@ export default function itemEditView(){
                 </View>
                 </>}
             </ScrollView>
-            <Button title="Cancel" onPress={router.navigate('/Home')}></Button>
+            <Button title="Cancel" onPress={()=>{router.navigate('/Home')}}></Button>
+            <Button title="Submit" onPress={()=>{console.log("Submit Clicked")}} />
         </View>
         </>
     );
