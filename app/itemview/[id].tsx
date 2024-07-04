@@ -16,8 +16,8 @@ export default function itemEditView(){
     dbfunc.initDb();
 
     const {id} = useLocalSearchParams();
-    const correspondingRow = db.getFirstSync<dbEntry>(`SELECT * FROM item WHERE New_Property_Number = ${id}`);
-    console.log(correspondingRow)
+    const correspondingRow = db.getFirstSync<dbEntry>(`SELECT * FROM item WHERE New_Property_Number = "${id}"`);
+    console.log("Corresponding Row: "+correspondingRow)
     return(
         <>
         <View>

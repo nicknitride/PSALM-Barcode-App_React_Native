@@ -149,8 +149,8 @@ export default function TestParsePage() {
                <Button
                     title="Display Data in Server"
                     onPress={() => {
-                         //  console.log("Clicked display data", databaseData);
                          getAllData();
+                          console.log("Clicked display data", JSON.stringify(databaseData));
                     }}
                ></Button>
                <ScrollView>
