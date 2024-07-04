@@ -25,3 +25,14 @@ TO-DO LIST:
 Clarifications:
 -    Dropdown menu for "Conditions"
 -    Anything else needs to be edited
+
+
+Get index of the last item with a property number
+     actual_index = <actual index of the last item>
+     counter = 0
+
+     for every empty cell after:
+          counter ++
+     for (i=last_index; i<(last_index+counter);i++ ):
+          index[i] = actual_index
+     
