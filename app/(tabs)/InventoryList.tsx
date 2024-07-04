@@ -12,7 +12,7 @@ export default function InventoryList() {
      const db = startDb();
      initDb();
      const showData = () => {
-          const allData = db.getAllSync(`SELECT * FROM recently_scanned`);
+          const allData = db.getAllSync(`SELECT * FROM recent_items`);
           setDisplay(JSON.stringify(allData));
      };
      return (
