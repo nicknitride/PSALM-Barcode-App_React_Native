@@ -36,6 +36,18 @@ export const initDb = async () => {
         `);
 };
 
+function escapeQuotes(inputString:any) {
+    if (typeof inputString !== 'string') {
+        throw new Error('Input should be a string');
+    }
+
+    // Use regex to find all occurrences of double quotes and single quotes inside the string and escape them with a backslash
+    // return inputString.replace(/(?<!\\)"/g, '\\"').replace(/'/g, "\\'");
+    let changedString = inputString.split("\"").join("\\\"");
+    let finalString = changedString.split("\'").join("\\\'");
+    return finalString
+}
+
 export const insertDataDbSingle = (
     articleItem: string,
     Desc: string,
@@ -50,6 +62,8 @@ export const insertDataDbSingle = (
     Remarks: string
 ) => {
     const db = startDb();
+    let editedDesc = escapeQuotes(`${Desc}`);
+    console.log(editedDesc)
     db.execSync(`INSERT INTO item (
               Article_Item,
               Description,

@@ -87,13 +87,14 @@ export default function TestParsePage() {
                     // console.log("File Content: ",fileContent)
                     const parsedData = Papa.parse(fileContent, {
                          header: true,
+                         escapeChar: "\\",
                          transformHeader: (header: any) => header.trim(), // trim trailing spaces from header
                          skipEmptyLines: true,
                          complete: (results: any) => {
                               db.execAsync("DELETE FROM item;");
                               console.log("Parsed Data: ", results);
                               SetGlobalFileContent(results.data);
-                              // console.log(results.data.length);
+                              console.log("I'M THE LENGTH: ", results.data.length);
                               for (let i = 0; i < results.data.length; i++) {
                                    console.log("Beginning data insertion")
                                    insertDataDbSingle(

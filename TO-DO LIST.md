@@ -26,6 +26,8 @@ Clarifications:
 -    Dropdown menu for "Conditions"
 -    Anything else needs to be edited
 
+LIMITATIONS:
+-    Import CSV is sensitive to property number. Lack of it breaks importing.
 
 Get index of the last item with a property number
      actual_index = <actual index of the last item>

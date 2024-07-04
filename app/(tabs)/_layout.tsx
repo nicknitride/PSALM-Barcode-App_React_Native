@@ -22,8 +22,8 @@ export default () => {
         <Tabs.Screen name="InventoryList" options={{ title: "Inventory",
             tabBarIcon: ({ color }) => <FontAwesome size={25} name="list" color={color} />,
          }} />
-         <Tabs.Screen name="TestParsePage" options={{ title: "hourglass",
-            tabBarIcon: ({ color }) => <FontAwesome size={25} name="list" color={color} />,
+         <Tabs.Screen name="TestParsePage" options={{ title: "Testing",
+            tabBarIcon: ({ color }) => <FontAwesome size={25} name="gear" color={color} />,
          }} />
       </Tabs>
     </>
