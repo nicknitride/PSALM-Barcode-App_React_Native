@@ -127,6 +127,7 @@ export default function itemEditView() {
                                              correspondingRow?.Condition,
                                              correspondingRow?.Remarks
                                         );
+                                        router.back()
                                    }}
                               />
                          </View>

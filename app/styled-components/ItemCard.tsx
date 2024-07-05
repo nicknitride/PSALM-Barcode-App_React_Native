@@ -19,7 +19,7 @@ export default function ItemCard(items: Items) {
      console.log(items["items"]["Article_Item"])
      return (
           <>
-               <View style={cardstyle.card}>
+               <View style={cardstyle.card} key={items["items"]["New_Property_Number"]}>
                     <Text style={[cardstyle.textStyle,cardstyle.header]}>{items["items"]["Article_Item"]}</Text>
                     <Text style={cardstyle.textStyle}>Old. Prop. Number: {items["items"]["Old_Property_Number"]}</Text>
                     <Text style={cardstyle.textStyle}>New. Prop. Number: {items["items"]["New_Property_Number"]}</Text>

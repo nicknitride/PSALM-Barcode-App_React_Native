@@ -1,4 +1,5 @@
 import { FlatList, ScrollView, Text, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import * as SQLite from "expo-sqlite";
 import { useState, useEffect } from "react";
 import Button from "../styled-components/Button";
@@ -16,13 +17,15 @@ export default function InventoryList() {
      initDb();
 
      const showData = () => {
-          const allData = db.getAllSync(`SELECT * FROM item`);
+          const allData = db.getAllSync(`SELECT * FROM recent_items`);
           console.log(allData);
           setDisplay(JSON.stringify(allData));
      };
 
-     const allData = db.getAllSync(`SELECT * FROM item`);
-
+     useFocusEffect(()=>{
+          showData();
+})
+     const allData = db.getAllSync(`SELECT * FROM recent_items`);
      return (
           <View style={{flex:1,justifyContent:"center", width:"100%"}}>
                <ScrollView>

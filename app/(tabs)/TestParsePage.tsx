@@ -91,7 +91,7 @@ export default function TestParsePage() {
                          transformHeader: (header: any) => header.trim(), // trim trailing spaces from header
                          skipEmptyLines: true,
                          complete: (results: any) => {
-                              db.execAsync("DELETE FROM item;");
+                              db.execAsync("DELETE FROM item; DELETE from recent_items");
                               console.log("Parsed Data: ", results);
                               SetGlobalFileContent(results.data);
                               console.log("I'M THE LENGTH: ", results.data.length);
