@@ -21,18 +21,15 @@ export default function itemEditView() {
      );
 
      const [condition, setCondition] = useState(correspondingRow?.Condition);
-     const [Article_Item, setArticle_Item] = useState(
-          correspondingRow?.Article_Item
-     );
-     const [Description, setDescription] = useState(
-          correspondingRow?.Description
+     const [remark, setRemark] = useState(
+          correspondingRow?.Remarks
      );
 
      console.log("Corresponding Row: " + JSON.stringify(correspondingRow));
      return (
           <>
                <View style={styles.container}>
-                    <View style={{ width: "85%" }}>
+                    <View>
                          <Stack.Screen options={{ headerTitle:"Update Entry View" }} />
                          <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                               Editing Item: {recentId}
@@ -51,28 +48,42 @@ export default function itemEditView() {
                                                   Description:{" "}
                                                   {correspondingRow.Description}
                                              </Text>
+                                             <Text>Condition:</Text>
                                              <ScrollView>
                                                   <TextInput
                                                        multiline={true}
+                                                       placeholder={`${condition}`}
                                                        textAlignVertical="top"
                                                        numberOfLines={4}
                                                        style={styles.input}
-                                                       value={Article_Item}
+                                                       value={condition}
                                                        onChangeText={(
                                                             change
                                                        ) => {
-                                                            setArticle_Item(
+                                                            setCondition(
                                                                  change
                                                             );
                                                        }}
                                                   />
                                              </ScrollView>
-
-                                             <Text>
-                                                  Article Item Value:{" "}
-                                                  {Article_Item}
-                                             </Text>
-                                             <Text>Unit Value</Text>
+                                             <ScrollView>
+                                             <Text>Remarks: </Text>
+                                             <TextInput
+                                                       multiline={true}
+                                                       placeholder={`${remark}`}
+                                                       textAlignVertical="top"
+                                                       numberOfLines={4}
+                                                       style={styles.input}
+                                                       value={remark}
+                                                       onChangeText={(
+                                                            change
+                                                       ) => {
+                                                            setRemark(
+                                                                 change
+                                                            );
+                                                       }}
+                                                  />
+                                             </ScrollView>
                                         </View>
                                    </>
                               )}
@@ -90,7 +101,7 @@ export default function itemEditView() {
                                         console.log("Submit Clicked");
                                         console.log(data);
                                         dbFunc.updateRecentTable(
-                                             Article_Item,
+                                             correspondingRow?.Article_Item,
                                              dbFunc.quoter(correspondingRow?.Description),
                                              correspondingRow?.Old_Property_Number,
                                              correspondingRow?.New_Property_Number,

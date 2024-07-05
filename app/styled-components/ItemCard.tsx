@@ -31,6 +31,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({items, onClick})=> {
                     <Text style={cardstyle.textStyle}>Old. Prop. Number: {items.Old_Property_Number}</Text>
                     <Text style={cardstyle.textStyle}>New. Prop. Number: {items.New_Property_Number}</Text>
                     <Text style={cardstyle.textStyle}>Description: {items.Description}</Text>
+                    <Text style={cardstyle.textStyle}>Condition: {items.Condition}</Text>
+                    <Text style={cardstyle.textStyle}>Remarks: {items.Remarks}</Text>
+                    
+
                     
                     <View style={{flexDirection:"row",justifyContent:"space-around",paddingTop:14}}>
                     <Pressable style={({ pressed }) => [
