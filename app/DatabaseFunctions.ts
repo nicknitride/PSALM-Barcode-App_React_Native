@@ -145,3 +145,8 @@ export const sqlToCsv = async () => {
     const allData = await db.getAllSync(`SELECT * FROM item`);
     var csv = Papa.unparse(allData);
 };
+
+export const deleteItem = (id) => {
+    const db = startDb();
+    db.execSync(`DELETE FROM recent_items WHERE New_Property_Number=${id}`)
+}

@@ -36,7 +36,9 @@ export default function ItemCard(items: Items) {
                     <Pressable style={({ pressed }) => [
                               cardstyle.button,
                               pressed && cardstyle.buttonPressed
-                              ]}>
+                              ]}
+                              onPress={}
+                              >
                          <Text style={{color:"black"}} 
                          >Delete</Text>
                     </Pressable>

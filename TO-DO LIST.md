@@ -15,6 +15,7 @@ TO-DO LIST:
      -    Note: Edits the scanned items selected from TABLE recently_scanned
 -    Import CSV
      -    note that Import CSV clears all tables in db
+     -    Create separate button to clear recent items table
 -    Export CSV
      -    replace the db being exported with TABLE recently_scanned
      -    modify export name to include date and time
@@ -28,6 +29,8 @@ Clarifications:
 
 LIMITATIONS:
 -    Import CSV is sensitive to property number. Lack of it breaks importing.
+
+
 
 Get index of the last item with a property number
      actual_index = <actual index of the last item>
