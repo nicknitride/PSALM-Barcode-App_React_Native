@@ -73,31 +73,6 @@ export default function itemEditView() {
                                                   {Article_Item}
                                              </Text>
                                              <Text>Unit Value</Text>
-                                             {/* <TextInput
-                                                  style={[
-                                                       styles.input,
-                                                       styles.largeText,
-                                                  ]}
-                                                  value={Description}
-                                                  onChangeText={(change) => {
-                                                       setDescription(change);
-                                                  }}
-                                             />
-                                             <Text>
-                                                  Description Value:{" "}
-                                                  {Description}
-                                             </Text> */}
-                                             {/* <TextInput
-                                             placeholder={
-                                                  correspondingRow.Condition
-                                             }
-                                             style={styles.input}
-                                             value={condition}
-                                             onChangeText={(change) => {
-                                                  setCondition(change);
-                                             }}
-                                        />
-                                        <Text>Current Val: {condition}</Text> */}
                                         </View>
                                    </>
                               )}
