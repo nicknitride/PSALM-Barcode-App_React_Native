@@ -24,39 +24,21 @@ export default function InventoryList() {
      const allData = db.getAllSync(`SELECT * FROM item`);
 
      return (
-          <SafeAreaView
-               style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "white"
-               }}
-          >
-               <ScrollView style={{flex:1}} >
+          <View style={{flex:1,justifyContent:"center", width:"100%"}}>
+               <ScrollView>
                     <Text style={{ color: "black" }}></Text>
+                    <View style={{alignItems:"center"}}>
+                    <View style={{width:"80%"}}>
                     {allData.map((item) => (
                          <>
                          {/* <Text>{JSON.stringify(item)}</Text> */}
                          <ItemCard items={item}></ItemCard>
                          </>
                     ))}
-                    {/* {display === null && (
-                         <>
-                              <Text>Scanned Items will appear</Text>
-                         </>
-                    )}
-                    {display && (
-                         <>
-                              <Text>{display}</Text>
-                         </>
-                    )} */}
+                     </View>
+                     </View>
                </ScrollView>
-               {/* <Button
-                    title="Check Button"
-                    onPress={() => {
-                         showData();
-                    }}
-               ></Button> */}
-          </SafeAreaView>
+          </View>
+
      );
 }

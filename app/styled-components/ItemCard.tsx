@@ -20,27 +20,27 @@ export default function ItemCard(items: Items) {
      return (
           <>
                <View style={cardstyle.card}>
-                    <Text>Item Name: {items["items"]["Article_Item"]}</Text>
-                    <Text>Description: {items["items"]["Description"]}</Text>
-                    <Text>Old. Prop. Number: {items["items"]["Old_Property_Number"]}</Text>
-                    <Text>New. Prop. Number: {items["items"]["New_Property_Number"]}</Text>
-                    <View style={{flexDirection:"row",justifyContent:"space-between",paddingHorizontal:20}}>
+                    <Text style={[cardstyle.textStyle,cardstyle.header]}>{items["items"]["Article_Item"]}</Text>
+                    <Text style={cardstyle.textStyle}>Old. Prop. Number: {items["items"]["Old_Property_Number"]}</Text>
+                    <Text style={cardstyle.textStyle}>New. Prop. Number: {items["items"]["New_Property_Number"]}</Text>
+                    <Text style={cardstyle.textStyle}>Description: {items["items"]["Description"]}</Text>
+                    
+                    <View style={{flexDirection:"row",justifyContent:"space-around",paddingTop:14}}>
                     <Pressable style={({ pressed }) => [
                               cardstyle.button,
                               pressed && cardstyle.buttonPressed
                               ]}>
-                         <Text style={{color:"white"}} 
+                         <Text style={{color:"black"}} 
                          >Edit</Text>
                     </Pressable>
                     <Pressable style={({ pressed }) => [
                               cardstyle.button,
                               pressed && cardstyle.buttonPressed
                               ]}>
-                         <Text style={{color:"white"}} 
+                         <Text style={{color:"black"}} 
                          >Delete</Text>
                     </Pressable>
                     </View>
-
                </View>
           </>
      );
@@ -49,15 +49,16 @@ export default function ItemCard(items: Items) {
 const cardstyle = StyleSheet.create(
      {
           card:{
-               backgroundColor:"gray",
-               marginBottom:5,
-               width:"80%",
+               backgroundColor:"black",
+               marginBottom:15,
+               width:"100%",
                borderRadius:20,
-               padding:10
+               padding:20,
+               marginRight: 15,
           },
           button:{
                padding:10,
-               backgroundColor:"black",
+               backgroundColor:"white",
                color:"white",
                borderRadius:15,
                marginVertical: 5,
@@ -66,6 +67,14 @@ const cardstyle = StyleSheet.create(
           },
           buttonPressed: {
                backgroundColor: 'gray',  // Change to a different color when pressed
+          },
+          textStyle:{
+               color:'white',
+               paddingBottom:5
+          },
+          header:{
+               fontSize:20,
+               fontWeight:"bold"
           }
      }
 )

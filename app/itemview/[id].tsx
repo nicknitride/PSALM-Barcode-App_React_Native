@@ -44,7 +44,6 @@ export default function itemEditView(){
             }
                 } />
             </View>
-
         </View>
         </>
     );
@@ -60,8 +59,6 @@ const styles = StyleSheet.create({
         borderColor:"grey"
     },
     container:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center'
+        flex:1
     }
 })
