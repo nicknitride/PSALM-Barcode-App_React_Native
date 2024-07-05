@@ -176,5 +176,5 @@ export const sqlToCsv = async () => {
 
 export const deleteItem = (id:any) => {
     const db = startDb();
-    db.execSync(`DELETE FROM recent_items WHERE New_Property_Number=${id}`)
+    db.execSync(`DELETE FROM recent_items WHERE New_Property_Number="${id}"`)
 }

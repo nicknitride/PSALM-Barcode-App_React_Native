@@ -16,24 +16,28 @@ interface Items {
      Remarks: string;
 }
 }
+interface ItemCardProps {
+     items: Items;
+     onClick: () => void;
+ }
 
-export default function ItemCard(items: Items, onClick:()=>void) {
+export const ItemCard: React.FC<ItemCardProps> = ({items, onClick})=> {
      console.log(items)
-     console.log(items["items"]["Article_Item"])
+     // console.log(items["items"]["Article_Item"])
      return (
           <>
-               <View style={cardstyle.card} key={items["items"]["New_Property_Number"]}>
-                    <Text style={[cardstyle.textStyle,cardstyle.header]}>{items["items"]["Article_Item"]}</Text>
-                    <Text style={cardstyle.textStyle}>Old. Prop. Number: {items["items"]["Old_Property_Number"]}</Text>
-                    <Text style={cardstyle.textStyle}>New. Prop. Number: {items["items"]["New_Property_Number"]}</Text>
-                    <Text style={cardstyle.textStyle}>Description: {items["items"]["Description"]}</Text>
+               <View style={cardstyle.card} key={items.New_Property_Number}>
+                    <Text style={[cardstyle.textStyle,cardstyle.header]}>{items.Article_Item}</Text>
+                    <Text style={cardstyle.textStyle}>Old. Prop. Number: {items.Old_Property_Number}</Text>
+                    <Text style={cardstyle.textStyle}>New. Prop. Number: {items.New_Property_Number}</Text>
+                    <Text style={cardstyle.textStyle}>Description: {items.Description}</Text>
                     
                     <View style={{flexDirection:"row",justifyContent:"space-around",paddingTop:14}}>
                     <Pressable style={({ pressed }) => [
                               cardstyle.button,
                               pressed && cardstyle.buttonPressed
                               ]}
-                              onPress={()=>{router.push(`/itemview/recent/${items["items"]["New_Property_Number"]}`)}}>
+                              onPress={()=>{router.push(`/itemview/recent/${items.New_Property_Number}`)}}>
                          <Text style={{color:"black"}} 
                          >Edit</Text>
                     </Pressable>
@@ -42,9 +46,10 @@ export default function ItemCard(items: Items, onClick:()=>void) {
                               pressed && cardstyle.buttonPressed
                               ]}
                               onPress={()=>{
+                                   console.log("Prop Num: ",items.New_Property_Number)
                                    console.log("Delete clicked")
-                                   dbFunc.deleteItem(`${items["items"]["New_Property_Number"]}`);
-                                   onClick
+                                   dbFunc.deleteItem(items.New_Property_Number);
+                                   onClick()
                               }}
                               >
                          <Text style={{color:"black"}} 
@@ -88,3 +93,4 @@ const cardstyle = StyleSheet.create(
           }
      }
 )
+export default ItemCard;
