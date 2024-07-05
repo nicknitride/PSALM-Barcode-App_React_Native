@@ -9,23 +9,16 @@ import { dbEntry } from "../types";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function InventoryList() {
-     const [display, setDisplay] = useState<string>("");
-     useEffect(() => {
-          showData();
-     }, []);
+     // const [display, setDisplay] = useState<string>("");
      const db = startDb();
      initDb();
-
+     let allData = db.getAllSync(`SELECT * FROM recent_items`);
      const showData = () => {
-          const allData = db.getAllSync(`SELECT * FROM recent_items`);
-          console.log(allData);
-          setDisplay(JSON.stringify(allData));
+           allData = db.getAllSync(`SELECT * FROM recent_items`);
      };
-
      useFocusEffect(()=>{
           showData();
-})
-     const allData = db.getAllSync(`SELECT * FROM recent_items`);
+     })
      return (
           <View style={{flex:1,justifyContent:"center", width:"100%"}}>
                <ScrollView>
@@ -34,14 +27,12 @@ export default function InventoryList() {
                     <View style={{width:"80%"}}>
                     {allData.map((item) => (
                          <>
-                         {/* <Text>{JSON.stringify(item)}</Text> */}
-                         <ItemCard items={item}></ItemCard>
+                         <ItemCard items={item} onClick={showData}/>
                          </>
                     ))}
                      </View>
                      </View>
                </ScrollView>
           </View>
-
      );
 }

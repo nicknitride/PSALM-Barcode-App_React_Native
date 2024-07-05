@@ -13,10 +13,11 @@ interface Items {
      Quantity_per_Physical_Count: string;
      Location_Whereabouts: string;
      Condition: string;
-     Remarks: string;}
+     Remarks: string;
+}
 }
 
-export default function ItemCard(items: Items) {
+export default function ItemCard(items: Items, onClick:()=>void) {
      console.log(items)
      console.log(items["items"]["Article_Item"])
      return (
@@ -40,7 +41,11 @@ export default function ItemCard(items: Items) {
                               cardstyle.button,
                               pressed && cardstyle.buttonPressed
                               ]}
-                              onPress={()=>{dbFunc.deleteItem(items["items"]["New_Property_Number"])}}
+                              onPress={()=>{
+                                   console.log("Delete clicked")
+                                   dbFunc.deleteItem(`${items["items"]["New_Property_Number"]}`);
+                                   onClick
+                              }}
                               >
                          <Text style={{color:"black"}} 
                          >Delete</Text>
