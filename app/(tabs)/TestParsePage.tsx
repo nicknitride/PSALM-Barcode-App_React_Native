@@ -43,7 +43,7 @@ export default function TestParsePage() {
                     )
                          .then(async (uri) => {
                               const allData =
-                                   db.getAllSync(`SELECT * FROM item;`);
+                                   db.getAllSync(`SELECT * FROM recent_items;`);
                               let processedCsv = Papa.unparse(allData);
                               await FileSystem.writeAsStringAsync(
                                    uri,
@@ -129,7 +129,7 @@ export default function TestParsePage() {
 
      };
      return (
-          <View>
+          <View style={{flex:1}}>
                <Button
                     title="Import CSV"
                     onPress={() => {
@@ -141,12 +141,6 @@ export default function TestParsePage() {
                     title="Export CSV"
                     onPress={() => {
                          exportDb();
-                    }}
-               />
-               <Button
-                    title="Open Database Test Page"
-                    onPress={() => {
-                         router.push("/testing/dbtestpage");
                     }}
                />
                <Button

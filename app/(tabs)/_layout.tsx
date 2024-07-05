@@ -19,10 +19,10 @@ export default () => {
       >
         <Tabs.Screen name="Home" options={{title:"Scanner",headerTitle:"PSALM Barcode Scanner", 
             tabBarIcon: ({ color }) => <FontAwesome size={25} name="barcode" color={color} />,}}/>
-        <Tabs.Screen name="InventoryList" options={{ title: "Inventory",
+        <Tabs.Screen name="InventoryList" options={{ title: "Recently Scanned",
             tabBarIcon: ({ color }) => <FontAwesome size={25} name="list" color={color} />,
          }} />
-         <Tabs.Screen name="TestParsePage" options={{ title: "Testing",
+         <Tabs.Screen name="TestParsePage" options={{ title: "Settings",
             tabBarIcon: ({ color }) => <FontAwesome size={25} name="gear" color={color} />,
          }} />
       </Tabs>
