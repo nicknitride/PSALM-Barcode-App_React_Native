@@ -36,7 +36,7 @@ export const initDb = async () => {
         `);
 };
 
-function escapeQuotes(inputString:any) {
+export function escapeQuotes(inputString:any) {
     if (typeof inputString !== 'string') {
         throw new Error('Input should be a string');
     }
@@ -46,6 +46,10 @@ function escapeQuotes(inputString:any) {
     let changedString = inputString.split("\"").join("\\\"");
     let finalString = changedString.split("\'").join("\\\'");
     return finalString
+}
+
+export const quoter = (stringy: string) => {
+    return stringy.replace("'","''").replace('"', '""');
 }
 
 export const insertDataDbSingle = (
@@ -65,6 +69,50 @@ export const insertDataDbSingle = (
     let editedDesc = escapeQuotes(`${Desc}`);
     console.log(editedDesc)
     db.execSync(`INSERT INTO item (
+              Article_Item,
+              Description,
+              Old_Property_Number,
+              New_Property_Number,
+              Unit_of_Measure,
+              Unit_Value,
+              Quantity_per_Property_Card,
+              Quantity_per_Physical_Count,
+              Location_Whereabouts,
+              Condition,
+              Remarks
+          )
+          VALUES (
+              "${articleItem}",
+              "${Desc}",
+              "${Old_Prop_Num}",
+              "${New_Prop_Num}",
+              "${Unit_of_Measure}",
+              "${Unit_Value}",
+              "${Quantity_per_Property_Card}",
+              "${Quantity_per_Physical_Count}",
+              "${Location_Whereabouts}",
+              "${Condition}",
+              "${Remarks}"
+          );`);
+};
+
+export const insertToRecent = (
+    articleItem: string,
+    Desc: string,
+    Old_Prop_Num: string,
+    New_Prop_Num: string,
+    Unit_of_Measure: string,
+    Unit_Value: string,
+    Quantity_per_Property_Card: string,
+    Quantity_per_Physical_Count: string,
+    Location_Whereabouts: string,
+    Condition: string,
+    Remarks: string
+) => {
+    const db = startDb();
+    let editedDesc = escapeQuotes(`${Desc}`);
+    console.log(editedDesc)
+    db.execSync(`INSERT INTO recent_items (
               Article_Item,
               Description,
               Old_Property_Number,

@@ -21,7 +21,7 @@ export default function InventoryList() {
           setDisplay(JSON.stringify(allData));
      };
 
-     const allData = db.getAllSync(`SELECT * FROM item`);
+     const allData = db.getAllSync(`SELECT * FROM recent_items`);
 
      return (
           <SafeAreaView
