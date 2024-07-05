@@ -1,5 +1,6 @@
 import { View,ScrollView, Text,StyleSheet,Pressable } from "react-native";
 import * as dbFunc from "../DatabaseFunctions";
+import { router } from "expo-router";
 
 interface Items {
      items: {Article_Item: string;
@@ -30,7 +31,8 @@ export default function ItemCard(items: Items) {
                     <Pressable style={({ pressed }) => [
                               cardstyle.button,
                               pressed && cardstyle.buttonPressed
-                              ]}>
+                              ]}
+                              onPress={()=>{router.push(`/itemview/recent/${items["items"]["New_Property_Number"]}`)}}>
                          <Text style={{color:"black"}} 
                          >Edit</Text>
                     </Pressable>
