@@ -110,8 +110,8 @@ export default function itemEditView() {
                                              correspondingRow?.Quantity_per_Property_Card,
                                              correspondingRow?.Quantity_per_Physical_Count,
                                              correspondingRow?.Location_Whereabouts,
-                                             correspondingRow?.Condition,
-                                             correspondingRow?.Remarks
+                                             condition,
+                                             remark
                                         );
                                         router.back()
                                    }}
