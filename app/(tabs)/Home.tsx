@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Button from "../styled-components/Button";
-import { initDb } from "../DatabaseFunctions";
+import * as dbFunc from "../DatabaseFunctions";
 
 export default function App() {
      const [facing, setFacing] = useState("back");
      const [permission, requestPermission] = useCameraPermissions();
      const [detectedQR, setDetectedQR] = useState(false);
      const [QRValue, setQRValue] = useState("");
-
+     const [recentItemExists, setRecentItemExists] = useState<any>();
+     const db = dbFunc.startDb();
      useEffect(() => {
-          initDb();
+          dbFunc.initDb();
      }, []);
 
      if (!permission) {
@@ -68,6 +69,14 @@ export default function App() {
                                              console.log(result);
                                              setDetectedQR(true);
                                              setQRValue(`${result.raw}`);
+                                             const recentItem = db.getFirstSync(`SELECT * FROM recent_items WHERE New_Property_Number = "${result.raw}";`);
+                                             if(recentItem===null){
+                                                  setRecentItemExists(false)
+                                             }
+                                             else{
+                                                  setRecentItemExists(true)
+                                             }
+                                             console.log("Recent Item Exists: ",recentItemExists,recentItem)
                                         }
                                    }}
                               >
@@ -106,9 +115,24 @@ export default function App() {
                                                   "Submit clicked for: " +
                                                        QRValue
                                              );
+                                             /* 
+                                             if (recent_item){
+                                             router.push(`/itemview/${QRValue}`)
+                                             }
+                                             else{
+                                             router.push(`/itemview/recent_${QRValue}`)
+                                             }
+                                        
+                                             */
+                                            if(recentItemExists){
+                                             router.push(`/itemview/recent/${QRValue}`)
+                                            }
+                                            else{
                                              router.push(
                                                   `/itemview/${QRValue}`
                                              );
+                                            }
+                                            
                                         }}
                                    ></Button>
                                    <Button

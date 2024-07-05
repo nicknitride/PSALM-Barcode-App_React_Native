@@ -1,4 +1,5 @@
 import { View,ScrollView, Text,StyleSheet,Pressable } from "react-native";
+import * as dbFunc from "../DatabaseFunctions";
 
 interface Items {
      items: {Article_Item: string;
@@ -37,7 +38,7 @@ export default function ItemCard(items: Items) {
                               cardstyle.button,
                               pressed && cardstyle.buttonPressed
                               ]}
-                              onPress={}
+                              onPress={()=>{dbFunc.deleteItem(items["items"]["New_Property_Number"])}}
                               >
                          <Text style={{color:"black"}} 
                          >Delete</Text>

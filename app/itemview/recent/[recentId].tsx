@@ -1,13 +1,13 @@
 import { View, Text, ScrollView, TextInput, StyleSheet } from "react-native";
-import Button from "../styled-components/Button";
+import Button from "../../styled-components/Button";
 import { Stack, useLocalSearchParams } from "expo-router";
-import * as dbfunc from "../DatabaseFunctions";
+import * as dbfunc from "../../DatabaseFunctions";
 import * as SQLite from "expo-sqlite";
-import { dbEntry } from "../types";
+import { dbEntry } from "../../types";
 import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import * as dbFunc from "../DatabaseFunctions";
+import * as dbFunc from "../../DatabaseFunctions";
 
 // https://stackoverflow.com/questions/78246345/react-native-usesearchparams-hook-from-expo-router
 // SQLITE Expo tutorial: https://github.com/chelseafarley/expo-sqlite-tutorial/blob/main/App.js
@@ -15,9 +15,9 @@ import * as dbFunc from "../DatabaseFunctions";
 export default function itemEditView() {
      const db = dbfunc.startDb();
      dbfunc.initDb();
-     const { id } = useLocalSearchParams();
+     const { recentId } = useLocalSearchParams();
      const correspondingRow = db.getFirstSync<dbEntry>(
-          `SELECT * FROM recent_iems WHERE New_Property_Number = "${id}"`
+          `SELECT * FROM recent_items WHERE New_Property_Number = "${recentId}"`
      );
 
      const [condition, setCondition] = useState(correspondingRow?.Condition);
@@ -33,9 +33,9 @@ export default function itemEditView() {
           <>
                <View style={styles.container}>
                     <View style={{ width: "85%" }}>
-                         <Stack.Screen options={{ headerTitle: "Edit View" }} />
+                         <Stack.Screen options={{ headerTitle:"Update Entry View" }} />
                          <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                              Editing Item: {id}
+                              Editing Item: {recentId}
                          </Text>
                          <ScrollView>
                               {correspondingRow !== null && (
@@ -85,11 +85,11 @@ export default function itemEditView() {
                                    }}
                               ></Button>
                               <Button
-                                   title="Submit"
+                                   title="Update Existing Entry"
                                    onPress={(data: any) => {
                                         console.log("Submit Clicked");
                                         console.log(data);
-                                        dbFunc.insertToRecent(
+                                        dbFunc.updateRecentTable(
                                              Article_Item,
                                              dbFunc.quoter(correspondingRow?.Description),
                                              correspondingRow?.Old_Property_Number,

@@ -140,13 +140,41 @@ export const insertToRecent = (
           );`);
 };
 
+export const updateRecentTable = (
+    articleItem: string,
+    Desc: string,
+    Old_Prop_Num: string,
+    New_Prop_Num: string,
+    Unit_of_Measure: string,
+    Unit_Value: string,
+    Quantity_per_Property_Card: string,
+    Quantity_per_Physical_Count: string,
+    Location_Whereabouts: string,
+    Condition: string,
+    Remarks: string
+) => {
+    const db = startDb();
+    db.execSync(`UPDATE recent_items
+              SET
+              Article_Item = "${articleItem}",
+              Old_Property_Number = "${Old_Prop_Num}",
+              Unit_of_Measure = "${Unit_of_Measure}",
+              Unit_Value = "${Unit_Value}",
+              Quantity_per_Property_Card = "${Quantity_per_Property_Card}",
+              Quantity_per_Physical_Count = "${Quantity_per_Physical_Count}",
+              Location_Whereabouts = "${Location_Whereabouts}",
+              Condition = "${Condition}",
+              Remarks = "${Remarks}"
+          WHERE New_Property_Number = "${New_Prop_Num}";`);
+};
+
 export const sqlToCsv = async () => {
    const db = startDb();
     const allData = await db.getAllSync(`SELECT * FROM item`);
     var csv = Papa.unparse(allData);
 };
 
-export const deleteItem = (id) => {
+export const deleteItem = (id:any) => {
     const db = startDb();
     db.execSync(`DELETE FROM recent_items WHERE New_Property_Number=${id}`)
 }
