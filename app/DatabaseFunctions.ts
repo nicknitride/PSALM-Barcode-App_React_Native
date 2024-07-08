@@ -12,26 +12,28 @@ export const initDb = async () => {
         CREATE TABLE IF NOT EXISTS item (Article_Item TEXT,
         Description TEXT,
         Old_Property_Number TEXT,
-        New_Property_Number TEXT PRIMARY KEY,
+        New_Property_Number TEXT,
         Unit_of_Measure TEXT,
         Unit_Value TEXT,
         Quantity_per_Property_Card TEXT,
         Quantity_per_Physical_Count TEXT,
         Location_Whereabouts TEXT,
         Condition TEXT,
-        Remarks TEXT
+        Remarks TEXT,
+        PRIMARY KEY (New_Property_Number, Description)
         );
         CREATE TABLE IF NOT EXISTS recent_items (Article_Item TEXT,
         Description TEXT,
         Old_Property_Number TEXT,
-        New_Property_Number TEXT PRIMARY KEY,
+        New_Property_Number TEXT,
         Unit_of_Measure TEXT,
         Unit_Value TEXT,
         Quantity_per_Property_Card TEXT,
         Quantity_per_Physical_Count TEXT,
         Location_Whereabouts TEXT,
         Condition TEXT,
-        Remarks TEXT
+        Remarks TEXT,
+        PRIMARY KEY (New_Property_Number, Description)
         );
         `);
 };
