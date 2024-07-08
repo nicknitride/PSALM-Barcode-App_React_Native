@@ -1,6 +1,6 @@
 import {ScrollView, Text,View, Pressable} from 'react-native'
 import Button from '../styled-components/Button'
-import ItemCard from '../styled-components/ItemCard'
+import ItemCard from '../styled-components/ItemNoButton'
 import * as dbFunc from '../DatabaseFunctions'
 import { Stack } from 'expo-router'
 export default function CsvView(){
@@ -17,7 +17,7 @@ export default function CsvView(){
                     <View style={{width:"80%"}}>
                     {allData.map((item) => (
                          <>
-                         <ItemCard items={item} />
+                         <ItemCard items={item} key={item.New_Property_Number} />
                          </>
                     ))}
                      </View>

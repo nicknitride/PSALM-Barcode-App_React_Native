@@ -120,6 +120,8 @@ export default function TestParsePage() {
                               console.log("CSV Could not be read");
                          },
                     });
+                    console.log("Redirecting to csv preview")
+                    router.push('/itemview/csv_view');
                } else {
                     console.log("File Picker Cancelled");
                }
@@ -146,8 +148,7 @@ export default function TestParsePage() {
                <Button
                     title="Display Data in Server"
                     onPress={() => {
-                         getAllData();
-                          console.log("Clicked display data", JSON.stringify(databaseData));
+                         router.push('/itemview/csv_view')
                     }}
                ></Button>
                <ScrollView>
