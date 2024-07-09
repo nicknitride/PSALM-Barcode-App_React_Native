@@ -61,12 +61,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({ items, onClick }) => {
                               ]}
                               onPress={() => {
                                    router.push({
-                                        pathname: `/itemview/recent/${items.New_Property_Number}`,
-                                        params: {
-                                             desc: `${dbFunc.quoter(
-                                                  items.Description
-                                             )}`,
-                                        },
+                                       pathname: `/itemview/recent/${items.New_Property_Number}`,
+                                       params: {desc:`${dbFunc.quoter(items.Description)}`}
                                    });
                               }}
                          >

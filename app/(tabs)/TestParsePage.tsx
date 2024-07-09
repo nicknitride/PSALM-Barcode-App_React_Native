@@ -151,6 +151,9 @@ export default function TestParsePage() {
                          router.push('/itemview/csv_view')
                     }}
                ></Button>
+               <Button title="SQL Testing Page" onPress={()=>{
+                    router.push("/sqlTest")
+               }}/>
                <ScrollView>
                     <Text>
                          Parsed JSON: {JSON.stringify(docReqResult?.assets)}

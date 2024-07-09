@@ -21,7 +21,7 @@ interface ItemCardProps {
      onClick: () => void;
  }
 
-export const ItemCard: React.FC<ItemCardProps> = ({items, onClick})=> {
+export const ItemNoButton: React.FC<ItemCardProps> = ({items, onClick})=> {
      console.log(items)
      // console.log(items["items"]["Article_Item"])
      return (
@@ -70,4 +70,4 @@ const cardstyle = StyleSheet.create(
           }
      }
 )
-export default ItemCard;
+export default ItemNoButton;

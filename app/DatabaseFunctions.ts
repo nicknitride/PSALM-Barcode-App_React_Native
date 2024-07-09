@@ -168,7 +168,8 @@ export const updateRecentTable = (
               Condition = "${Condition}",
               Remarks = "${Remarks}"
           WHERE New_Property_Number = "${New_Prop_Num}";`);
-};
+}; 
+// ! TODO: Update this statement to include the item description
 
 export const sqlToCsv = async () => {
    const db = startDb();

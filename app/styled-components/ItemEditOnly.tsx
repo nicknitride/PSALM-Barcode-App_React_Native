@@ -31,7 +31,7 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
           JSON.stringify(items)
      );
      const recents = db.getFirstSync(
-          `SELECT * FROM recent_items WHERE New_Property_Number="${items.New_Property_Number}" AND Description="${dbFunc.quoter(items.Description)}"`
+          `SELECT * FROM recent_items WHERE New_Property_Number="${items.New_Property_Number}" AND Description="${dbFunc.quoter(items.Description)}";`
      );
 
      console.log("Recent DB Item Entry: ---------------------------------"+JSON.stringify(recents));
@@ -74,12 +74,12 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                               if (recents) {
                                    router.push({
                                        pathname: `/itemview/recent/${items.New_Property_Number}`,
-                                       params: {desc:`${dbFunc.quoter(items.Description)}`}
+                                       params: {desc: `${items.Description}`}
                                    });
                               } else {
                                    router.push({
                                         pathname: `/itemview/${items.New_Property_Number}`,
-                                        params: {desc:`${dbFunc.quoter(items.Description)}`}
+                                        params: {desc: `${items.Description}`}
                                     });
                               }
                          }}

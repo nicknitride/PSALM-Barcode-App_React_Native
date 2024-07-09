@@ -16,22 +16,23 @@ export default function itemEditView() {
      const db = dbfunc.startDb();
      dbfunc.initDb();
      const { recentId, desc } = useLocalSearchParams();
-     console.log("Desc: ----------"+desc)
+     console.log("Desc: ----------" + desc);
      const correspondingRow = db.getFirstSync<dbEntry>(
-          `SELECT * FROM recent_items WHERE New_Property_Number = "${recentId}" AND Description="${desc}"` 
+          `SELECT * FROM item WHERE New_Property_Number = $new_property_number AND Description = $description`,
+          { $new_property_number: `${recentId}`, $description: `${desc}` }
      );
 
      const [condition, setCondition] = useState(correspondingRow?.Condition);
-     const [remark, setRemark] = useState(
-          correspondingRow?.Remarks
-     );
+     const [remark, setRemark] = useState(correspondingRow?.Remarks);
 
      console.log("Corresponding Row: " + JSON.stringify(correspondingRow));
      return (
           <>
                <View style={styles.container}>
                     <View>
-                         <Stack.Screen options={{ headerTitle:"Update Entry View" }} />
+                         <Stack.Screen
+                              options={{ headerTitle: "Update Entry View" }}
+                         />
                          <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                               Editing Item: {recentId}
                          </Text>
@@ -68,8 +69,8 @@ export default function itemEditView() {
                                                   />
                                              </ScrollView>
                                              <ScrollView>
-                                             <Text>Remarks: </Text>
-                                             <TextInput
+                                                  <Text>Remarks: </Text>
+                                                  <TextInput
                                                        multiline={true}
                                                        placeholder={`${remark}`}
                                                        textAlignVertical="top"
@@ -79,9 +80,7 @@ export default function itemEditView() {
                                                        onChangeText={(
                                                             change
                                                        ) => {
-                                                            setRemark(
-                                                                 change
-                                                            );
+                                                            setRemark(change);
                                                        }}
                                                   />
                                              </ScrollView>
@@ -103,7 +102,9 @@ export default function itemEditView() {
                                         console.log(data);
                                         dbFunc.updateRecentTable(
                                              correspondingRow?.Article_Item,
-                                             dbFunc.quoter(correspondingRow?.Description),
+                                             dbFunc.quoter(
+                                                  correspondingRow?.Description
+                                             ),
                                              correspondingRow?.Old_Property_Number,
                                              correspondingRow?.New_Property_Number,
                                              correspondingRow?.Unit_of_Measure,
@@ -114,7 +115,7 @@ export default function itemEditView() {
                                              condition,
                                              remark
                                         );
-                                        router.push('/(tabs)/InventoryList')
+                                        router.push("/(tabs)/InventoryList");
                                    }}
                               />
                          </View>

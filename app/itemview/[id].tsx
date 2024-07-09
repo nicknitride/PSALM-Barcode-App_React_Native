@@ -15,16 +15,16 @@ export default function itemEditView() {
      dbfunc.initDb();
      const { id, desc } = useLocalSearchParams();
      console.log("DESC: --------------------"+desc)
-     console.log("Cleaned up DESC:" + dbFunc.quoter(desc))
      const correspondingRow = db.getFirstSync<dbEntry>(
-          `SELECT * FROM item WHERE New_Property_Number = "${id}" AND Description= "${desc}"`
+          `SELECT * FROM item WHERE New_Property_Number = $new_property_number AND Description = $description`, 
+          {$new_property_number: `${id}`,
+          $description: `${desc}`}
      );
 
      const [condition, setCondition] = useState(correspondingRow?.Condition);
      const [remark, SetRemark] = useState(
           correspondingRow?.Remarks
      );
-
      console.log("Corresponding Row: " + JSON.stringify(correspondingRow));
      return (
           <>
