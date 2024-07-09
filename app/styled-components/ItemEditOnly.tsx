@@ -71,6 +71,7 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                     <Button
                          title="edit"
                          onPress={() => {
+                              console.log("Recents is (ItemEdit Only) :"+JSON.stringify(recents))
                               if (recents) {
                                    router.push({
                                        pathname: `/itemview/recent/${items.New_Property_Number}`,

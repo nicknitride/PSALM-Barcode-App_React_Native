@@ -60,9 +60,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({ items, onClick }) => {
                                    pressed && cardstyle.buttonPressed,
                               ]}
                               onPress={() => {
+                                   console.log("\n \n \n Description In Item Card (Inventory List Card): -------"+items.Description+"\n \n \n")
                                    router.push({
                                        pathname: `/itemview/recent/${items.New_Property_Number}`,
-                                       params: {desc:`${dbFunc.quoter(items.Description)}`}
+                                       params: {desc: `${items.Description}`}
                                    });
                               }}
                          >
@@ -79,7 +80,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ items, onClick }) => {
                                         items.New_Property_Number
                                    );
                                    console.log("Delete clicked");
-                                   dbFunc.deleteItem(items.New_Property_Number);
+                                   dbFunc.deleteItem(items.New_Property_Number,items.Description);
                                    onClick();
                               }}
                          >

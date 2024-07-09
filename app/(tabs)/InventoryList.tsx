@@ -17,8 +17,8 @@ export default function InventoryList() {
      // Function to fetch data from database
     const fetchData = () => {
      console.log("Parent fetch triggered")
-     const data = db.getAllSync(`SELECT * FROM recent_items`);
-     setAllData(data);
+     // const data = ;
+     setAllData(db.getAllSync(`SELECT * FROM recent_items`));
  };
 
      // Fetch data on component mount

@@ -18,7 +18,7 @@ export default function itemEditView() {
      const { recentId, desc } = useLocalSearchParams();
      console.log("Desc: ----------" + desc);
      const correspondingRow = db.getFirstSync<dbEntry>(
-          `SELECT * FROM item WHERE New_Property_Number = $new_property_number AND Description = $description`,
+          `SELECT * FROM recent_items WHERE New_Property_Number = $new_property_number AND Description = $description`,
           { $new_property_number: `${recentId}`, $description: `${desc}` }
      );
 
@@ -102,9 +102,7 @@ export default function itemEditView() {
                                         console.log(data);
                                         dbFunc.updateRecentTable(
                                              correspondingRow?.Article_Item,
-                                             dbFunc.quoter(
-                                                  correspondingRow?.Description
-                                             ),
+                                             correspondingRow?.Description,
                                              correspondingRow?.Old_Property_Number,
                                              correspondingRow?.New_Property_Number,
                                              correspondingRow?.Unit_of_Measure,

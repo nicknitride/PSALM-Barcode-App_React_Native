@@ -156,18 +156,29 @@ export const updateRecentTable = (
     Remarks: string
 ) => {
     const db = startDb();
-    db.execSync(`UPDATE recent_items
+    db.runSync(`UPDATE recent_items
               SET
-              Article_Item = "${articleItem}",
-              Old_Property_Number = "${Old_Prop_Num}",
-              Unit_of_Measure = "${Unit_of_Measure}",
-              Unit_Value = "${Unit_Value}",
-              Quantity_per_Property_Card = "${Quantity_per_Property_Card}",
-              Quantity_per_Physical_Count = "${Quantity_per_Physical_Count}",
-              Location_Whereabouts = "${Location_Whereabouts}",
-              Condition = "${Condition}",
-              Remarks = "${Remarks}"
-          WHERE New_Property_Number = "${New_Prop_Num}";`);
+              Article_Item = $Article_Item,
+              Old_Property_Number = $Old_Prop_Num,
+              Unit_of_Measure = $Unit_of_Measure,
+              Unit_Value = $Unit_Value,
+              Quantity_per_Property_Card = $Quantity_per_Property_Card,
+              Quantity_per_Physical_Count = $Quantity_per_Physical_Count,
+              Location_Whereabouts = $Location_Whereabouts,
+              Condition = $Condition,
+              Remarks = $Remarks
+          WHERE New_Property_Number = $New_Prop_Num AND Description = $desc;`, 
+          {$Article_Item: `${articleItem}`,
+          $desc: `${Desc}`,
+        $Old_Prop_Num: `${Old_Prop_Num}`,
+        $New_Prop_Num: `${New_Prop_Num}`,
+        $Unit_of_Measure: `${Unit_of_Measure}`,
+        $Unit_Value: `${Unit_Value}`,
+        $Quantity_per_Property_Card: `${Quantity_per_Property_Card}`,
+        $Quantity_per_Physical_Count: `${Quantity_per_Physical_Count}`,
+        $Location_Whereabouts: `${Location_Whereabouts}`,
+        $Condition: `${Condition}`,
+        $Remarks: `${Remarks}`});
 }; 
 // ! TODO: Update this statement to include the item description
 
@@ -177,7 +188,8 @@ export const sqlToCsv = async () => {
     var csv = Papa.unparse(allData);
 };
 
-export const deleteItem = (id:any) => {
+export const deleteItem = (id:any, desc:any) => {
     const db = startDb();
-    db.execSync(`DELETE FROM recent_items WHERE New_Property_Number="${id}"`)
+    console.log(id,desc)
+    db.runSync(`DELETE FROM recent_items WHERE New_Property_Number= $id AND Description= $desc`, {$id: `${id}`,$desc : `${desc}`})
 }
