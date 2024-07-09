@@ -68,8 +68,8 @@ export const insertDataDbSingle = (
     Remarks: string
 ) => {
     const db = startDb();
-    let editedDesc = escapeQuotes(`${Desc}`);
-    console.log(editedDesc)
+    // let editedDesc = escapeQuotes(`${Desc}`);
+    // console.log(editedDesc)
     db.execSync(`INSERT INTO item (
               Article_Item,
               Description,

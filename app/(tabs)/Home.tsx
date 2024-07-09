@@ -1,20 +1,42 @@
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+     StyleSheet,
+     Text,
+     TouchableOpacity,
+     View,
+     ScrollView,
+} from "react-native";
 import Button from "../styled-components/Button";
 import * as dbFunc from "../DatabaseFunctions";
+import ItemEditOnly from "../styled-components/ItemEditOnly";
 
 export default function App() {
-     const [facing, setFacing] = useState("back");
-     const [permission, requestPermission] = useCameraPermissions();
-     const [detectedQR, setDetectedQR] = useState(false);
-     const [QRValue, setQRValue] = useState("");
-     const [recentItemExists, setRecentItemExists] = useState<any>();
      const db = dbFunc.startDb();
      useEffect(() => {
           dbFunc.initDb();
      }, []);
+
+     const [facing, setFacing] = useState("back");
+     const [permission, requestPermission] = useCameraPermissions();
+     const [QRValue, setQRValue] = useState("");
+     const [recentItemExists, setRecentItemExists] = useState<any>(false);
+     const [container, setContainer] = useState();
+     const itemList = (result: any) => {
+          const out = db.getAllSync(
+               `SELECT * FROM item WHERE New_Property_Number = "${result}";`
+          );
+          console.log("itemList Output: "+JSON.stringify(out))
+          return out;
+     };
+
+     const itemListLength = (result: any) => {
+          const out = db.getAllSync(
+               `SELECT * FROM item WHERE New_Property_Number = "${result}";`
+          );
+          return out.length;
+     };
 
      if (!permission) {
           // Camera permissions are still loading.
@@ -66,17 +88,33 @@ export default function App() {
                                    }}
                                    onBarcodeScanned={(result) => {
                                         if (QRValue === "") {
-                                             console.log(result);
-                                             setDetectedQR(true);
+                                             // console.log("--- Result ---  ", result);
                                              setQRValue(`${result.raw}`);
-                                             const recentItem = db.getFirstSync(`SELECT * FROM recent_items WHERE New_Property_Number = "${result.raw}";`);
-                                             if(recentItem===null){
-                                                  setRecentItemExists(false)
+                                             setContainer(itemList(result.raw));
+                                             console.log(
+                                                  "---  RESULT.RAW  ---",
+                                                  result.raw
+                                             );
+                                             // const itemList = db.getFirstSync(`SELECT * FROM item WHERE New_Property_Number = "${result.raw}";`);
+                                             // {container.map((item) => (
+                                             //      <>
+                                             //      {console.log("Map function item --- ", item)}
+                                             //      <] items={item} key={item.New_Property_Number} />
+                                             //      </>
+                                             // ))}
+                                             const recentItem = db.getFirstSync(
+                                                  `SELECT * FROM recent_items WHERE New_Property_Number = "${result.raw}";`
+                                             );
+                                             if (recentItem === null) {
+                                                  setRecentItemExists(false);
+                                             } else {
+                                                  setRecentItemExists(true);
                                              }
-                                             else{
-                                                  setRecentItemExists(true)
-                                             }
-                                             console.log("Recent Item Exists: ",recentItemExists,recentItem)
+                                             console.log(
+                                                  "Recent Item Exists: ",
+                                                  recentItemExists,
+                                                  recentItem
+                                             );
                                         }
                                    }}
                               >
@@ -98,51 +136,81 @@ export default function App() {
                {QRValue && (
                     <>
                          <View style={{ margin: 20 }}>
-                              <Text
-                                   style={{
-                                        margin: 5,
-                                        fontSize: 20,
-                                        fontWeight: "bold",
+                              <Button
+                                   title="Scan Another Instead"
+                                   onPress={() => {
+                                        setQRValue("");
                                    }}
-                              >
-                                   Detected Item no.: {QRValue}
-                              </Text>
-                              <View style={{ flexDirection: "row" }}>
-                                   <Button
-                                        title="Edit Detected Item"
-                                        onPress={() => {
-                                             console.log(
-                                                  "Submit clicked for: " +
-                                                       QRValue
-                                             );
-                                             /* 
+                              ></Button>
+                              {itemListLength(QRValue) > 1 && (
+                                   <>
+                                        <Text
+                                             style={{
+                                                  margin: 5,
+                                                  fontSize: 20,
+                                                  fontWeight: "bold",
+                                             }}
+                                        >
+                                             Detected Item no.: {QRValue}
+                                        </Text>
+                                        <ScrollView>
+                                             {console.log(
+                                                  "Containerrrrrrrrrrrrrrrr: " +
+                                                       `${JSON.stringify(
+                                                            container
+                                                       )}`
+                                             )}
+                                             {container.map((item) => (
+                                                  <>
+                                                       {console.log(
+                                                            item.Description
+                                                       )}
+                                                       <ItemEditOnly
+                                                            items={item}
+                                                            key={`${item.New_Property_Number}${item.Description}`}
+                                                       />
+                                                  </>
+                                             ))}
+                                        </ScrollView>
+                                   </>
+                              )}
+
+                              {itemListLength(QRValue) === 1 && (
+                                   <View style={{ flexDirection: "row" }}>
+                                        <Button
+                                             title="Edit Detected Item"
+                                             onPress={() => {
+                                                  console.log(
+                                                       "Submit clicked for: " +
+                                                            QRValue
+                                                  );
+                                                  /* 
                                              if (recent_item){
                                              router.push(`/itemview/${QRValue}`)
                                              }
                                              else{
                                              router.push(`/itemview/recent_${QRValue}`)
                                              }
-                                        
                                              */
-                                            if(recentItemExists){
-                                             router.push(`/itemview/recent/${QRValue}`)
-                                            }
-                                            else{
-                                             router.push(
-                                                  `/itemview/${QRValue}`
-                                             );
-                                            }
-                                            
-                                        }}
-                                   ></Button>
-                                   <Button
-                                        title="Scan Another Instead"
-                                        onPress={() => {
-                                             setQRValue("");
-                                             setDetectedQR(false);
-                                        }}
-                                   ></Button>
-                              </View>
+                                                  if (recentItemExists) {
+                                                       router.push(
+                                                            `/itemview/recent/${QRValue}`
+                                                       );
+                                                  } else {
+                                                       router.push(
+                                                            `/itemview/${QRValue}`
+                                                       );
+                                                  }
+                                             }}
+                                        ></Button>
+                                        <Button
+                                             title="Scan Another Instead"
+                                             onPress={() => {
+                                                  setQRValue("");
+                                             }}
+                                        ></Button>
+                                   </View>
+                              )}
                          </View>
                     </>
                )}

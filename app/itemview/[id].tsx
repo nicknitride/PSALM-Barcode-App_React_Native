@@ -2,10 +2,8 @@ import { View, Text, ScrollView, TextInput, StyleSheet } from "react-native";
 import Button from "../styled-components/Button";
 import { Stack, useLocalSearchParams } from "expo-router";
 import * as dbfunc from "../DatabaseFunctions";
-import * as SQLite from "expo-sqlite";
 import { dbEntry } from "../types";
 import { router } from "expo-router";
-import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import * as dbFunc from "../DatabaseFunctions";
 
@@ -15,9 +13,11 @@ import * as dbFunc from "../DatabaseFunctions";
 export default function itemEditView() {
      const db = dbfunc.startDb();
      dbfunc.initDb();
-     const { id } = useLocalSearchParams();
+     const { id, desc } = useLocalSearchParams();
+     console.log("DESC: --------------------"+desc)
+     console.log("Cleaned up DESC:" + dbFunc.quoter(desc))
      const correspondingRow = db.getFirstSync<dbEntry>(
-          `SELECT * FROM item WHERE New_Property_Number = "${id}"`
+          `SELECT * FROM item WHERE New_Property_Number = "${id}" AND Description= "${desc}"`
      );
 
      const [condition, setCondition] = useState(correspondingRow?.Condition);
@@ -113,7 +113,7 @@ export default function itemEditView() {
                                              condition,
                                              remark
                                         );
-                                        router.back()
+                                        router.push('/(tabs)/InventoryList')
                                    }}
                               />
                          </View>

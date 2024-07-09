@@ -15,9 +15,10 @@ import * as dbFunc from "../../DatabaseFunctions";
 export default function itemEditView() {
      const db = dbfunc.startDb();
      dbfunc.initDb();
-     const { recentId } = useLocalSearchParams();
+     const { recentId, desc } = useLocalSearchParams();
+     console.log("Desc: ----------"+desc)
      const correspondingRow = db.getFirstSync<dbEntry>(
-          `SELECT * FROM recent_items WHERE New_Property_Number = "${recentId}"`
+          `SELECT * FROM recent_items WHERE New_Property_Number = "${recentId}" AND Description="${desc}"` 
      );
 
      const [condition, setCondition] = useState(correspondingRow?.Condition);
@@ -113,7 +114,7 @@ export default function itemEditView() {
                                              condition,
                                              remark
                                         );
-                                        router.back()
+                                        router.push('/(tabs)/InventoryList')
                                    }}
                               />
                          </View>
