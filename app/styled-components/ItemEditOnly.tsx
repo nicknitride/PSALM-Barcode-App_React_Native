@@ -75,7 +75,7 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                               if (recents) {
                                    router.push({
                                        pathname: `/itemview/recent/${items.New_Property_Number}`,
-                                       params: {desc: `${items.Description}`}
+                                       params: {desc: `${recents.Description}`}
                                    });
                               } else {
                                    router.push({
