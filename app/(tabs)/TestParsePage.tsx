@@ -6,7 +6,7 @@ import {
      Button,
      Platform,
      ScrollView,
-     Modal
+     Modal,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import { useState, useEffect } from "react";
@@ -29,7 +29,7 @@ export default function TestParsePage() {
      const [databaseData, setDatabaseData] = useState<any>();
 
      const getAllData = async () => {
-          const allData = db.getAllSync("select * from item");
+          const allData = db.getAllSync("select * from recent_item");
           setDatabaseData(JSON.stringify(allData));
      };
      const exportDb = async () => {
@@ -37,6 +37,7 @@ export default function TestParsePage() {
                const permissions =
                     await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
                if (permissions.granted) {
+                    setModalIsVisible(true)
                     await FileSystem.StorageAccessFramework.createFileAsync(
                          permissions.directoryUri,
                          "example.csv",
@@ -155,6 +156,19 @@ export default function TestParsePage() {
                <Button title="SQL Testing Page" onPress={()=>{
                     router.push("/sqlTest")
                }}/>
+
+               {modalIsVisible && <View>
+                    <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalIsVisible}
+                    onRequestClose={() => {
+                         console.log("Modal has been closed")
+                         setModalIsVisible(!modalIsVisible)
+                    }} />
+                    <Text>Enter a Filename: </Text>
+                    <TextInput />
+               </View>}
                <ScrollView>
                     <Text>
                          Parsed JSON: {JSON.stringify(docReqResult?.assets)}
