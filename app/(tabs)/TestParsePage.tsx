@@ -3,7 +3,6 @@ import {
      Text,
      View,
      TextInput,
-     Button,
      Platform,
      ScrollView,
      Modal,
@@ -13,60 +12,58 @@ import { useState, useEffect } from "react";
 import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
 import Papa from "papaparse";
-import * as Sharing from "expo-sharing";
 import { router } from "expo-router";
 import { initDb, insertDataDbSingle } from "../DatabaseFunctions";
+import Button from "../styled-components/FullWidthButton";
 
 export default function TestParsePage() {
      const db = SQLite.openDatabaseSync("test.db");
      initDb();
      const [modalIsVisible, setModalIsVisible] = useState(false);
-     const [csv_string, setCsv_String] = useState();
-     const [globalFileContent, SetGlobalFileContent] = useState();
-     const [fileLocation, setFileLocation] = useState();
-     const [docReqResult, setDocRequest] =
-          useState<DocumentPicker.DocumentPickerResult>();
-     const [databaseData, setDatabaseData] = useState<any>();
+     const [userFilenameString, setUserFileNameString] = useState("");
 
-     const getAllData = async () => {
-          const allData = db.getAllSync("select * from recent_item");
-          setDatabaseData(JSON.stringify(allData));
-     };
-     const exportDb = async () => {
-          if (Platform.OS === "android") {
-               const permissions =
-                    await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
-               if (permissions.granted) {
-                    setModalIsVisible(true)
-                    await FileSystem.StorageAccessFramework.createFileAsync(
-                         permissions.directoryUri,
-                         "example.csv",
-                         "text/csv"
-                    )
-                         .then(async (uri) => {
-                              const allData =
-                                   db.getAllSync(`SELECT * FROM recent_items;`);
-                              let processedCsv = Papa.unparse(allData);
-                              await FileSystem.writeAsStringAsync(
-                                   uri,
-                                   processedCsv,
-                                   {
-                                        encoding: FileSystem.EncodingType.UTF8,
-                                   }
-                              );
-                              console.log(
-                                   "Finished Execution",
-                                   "CSV String: " + processedCsv
-                              );
-                         })
-                         .catch((e) => console.log(e));
-               } else {
-                    console.log("Permission not granted");
-               }
+     const fileExportFunction = async (stringName: string) => {
+          console.log("String Name for Export: " + stringName);
+          let outputString: string;
+          if (
+               stringName === null ||
+               stringName === undefined ||
+               stringName === ""
+          ) {
+               outputString = "Exported";
           } else {
-               await Sharing.shareAsync(
-                    FileSystem.documentDirectory + "SQLite/exported.csv"
-               );
+               outputString = stringName;
+          }
+          console.log(outputString);
+          const permissions =
+               await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+          const dateObject = new Date().toUTCString();
+          if (permissions.granted) {
+               await FileSystem.StorageAccessFramework.createFileAsync(
+                    permissions.directoryUri,
+                    `${outputString}_${dateObject}.csv`,
+                    "text/csv"
+               )
+                    .then(async (uri) => {
+                         const allData = db.getAllSync(
+                              `SELECT * FROM recent_items;`
+                         );
+                         let processedCsv = Papa.unparse(allData);
+                         await FileSystem.writeAsStringAsync(
+                              uri,
+                              processedCsv,
+                              {
+                                   encoding: FileSystem.EncodingType.UTF8,
+                              }
+                         );
+                         console.log(
+                              "Finished Execution",
+                              "CSV String: " + processedCsv
+                         );
+                    })
+                    .catch((e) => console.log(e));
+          } else {
+               console.log("File creation failed");
           }
      };
 
@@ -76,29 +73,26 @@ export default function TestParsePage() {
                     type: "text/comma-separated-values",
                     copyToCacheDirectory: true,
                });
-               setDocRequest(docRequest);
-               //  console.log(docRequest);
-                // console.log(docRequest.output);
-               //  console.log(docRequest.assets[0].uri);
                if (docRequest.assets[0].uri !== null) {
-                    setFileLocation(docRequest.assets[0].uri);
-                    // console.log("File Location: " + fileLocation);
                     const fileContent = await FileSystem.readAsStringAsync(
                          docRequest.assets[0].uri
                     );
-                    // console.log("File Content: ",fileContent)
                     const parsedData = Papa.parse(fileContent, {
                          header: true,
                          escapeChar: "\\",
                          transformHeader: (header: any) => header.trim(), // trim trailing spaces from header
                          skipEmptyLines: true,
                          complete: (results: any) => {
-                              db.execAsync("DELETE FROM item; DELETE from recent_items");
+                              db.execAsync(
+                                   "DELETE FROM item; DELETE from recent_items"
+                              );
                               console.log("Parsed Data: ", results);
-                              SetGlobalFileContent(results.data);
-                              console.log("I'M THE LENGTH: ", results.data.length);
+                              console.log(
+                                   "I'M THE LENGTH: ",
+                                   results.data.length
+                              );
                               for (let i = 0; i < results.data.length; i++) {
-                                   console.log("Beginning data insertion")
+                                   console.log("Beginning data insertion");
                                    insertDataDbSingle(
                                         results.data[i].Article_Item,
                                         results.data[i].Description,
@@ -114,7 +108,9 @@ export default function TestParsePage() {
                                         results.data[i].Condition,
                                         results.data[i].Remarks
                                    );
-                                   console.log("Importing entry number: "+String(i))
+                                   console.log(
+                                        "Importing entry number: " + String(i)
+                                   );
                               }
                               console.log("Completed import");
                          }, //Use  a for each to insert into the sqlite db
@@ -122,67 +118,107 @@ export default function TestParsePage() {
                               console.log("CSV Could not be read");
                          },
                     });
-                    console.log("Redirecting to csv preview")
-                    router.push('/itemview/csv_view');
+                    console.log("Redirecting to csv preview");
+                    router.push("/itemview/csv_view");
                } else {
                     console.log("File Picker Cancelled");
                }
           } catch (error) {
                console.log(error);
           }
-
      };
-     return (
-          <View style={{flex:1}}>
-               <Button
-                    title="Import CSV"
-                    onPress={() => {
-                         getFile();
-                         console.log("Import clicked");
-                    }}
-               ></Button>
-               <Button
-                    title="Export CSV"
-                    onPress={() => {
-                         exportDb();
-                    }}
-               />
-               <Button
-                    title="Display Data in Server"
-                    onPress={() => {
-                         router.push('/itemview/csv_view')
-                    }}
-               ></Button>
-               <Button title="SQL Testing Page" onPress={()=>{
-                    router.push("/sqlTest")
-               }}/>
-
-               {modalIsVisible && <View>
-                    <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalIsVisible}
-                    onRequestClose={() => {
-                         console.log("Modal has been closed")
-                         setModalIsVisible(!modalIsVisible)
-                    }} />
-                    <Text>Enter a Filename: </Text>
-                    <TextInput />
-               </View>}
-               <ScrollView>
-                    <Text>
-                         Parsed JSON: {JSON.stringify(docReqResult?.assets)}
-                    </Text>
-                    <Text>
-                         {databaseData && (
-                              <>
-                                   item table data:
-                                   {databaseData}
-                              </>
-                         )}
-                         {/* Parsed Data: {JSON.stringify(globalFileContent)} */}
-                    </Text>
-               </ScrollView>
-          </View>
-     );
+     if (!modalIsVisible) {
+          return (
+               <View style={{ flex: 1 ,justifyContent:"center",alignItems:"center"}}>
+                    <View style={{width:"80%"}}>
+                    <Button
+                         title="Import CSV"
+                         onPress={() => {
+                              getFile();
+                              console.log("Import clicked");
+                         }}
+                    ></Button>
+                    <Button
+                         title="Export CSV"
+                         onPress={() => {
+                              setModalIsVisible(true);
+                         }}
+                    />
+                    <Button
+                         title="Display Data in Server"
+                         onPress={() => {
+                              router.push("/itemview/csv_view");
+                         }}
+                    ></Button>
+                    </View>
+                    
+               </View>
+          );
+     } else {
+          return (
+               <>
+                    <View
+                         style={{
+                              flex: 1,
+                              justifyContent: "center",
+                              alignItems: "center",
+                         }}
+                    >
+                         <View style={styles.dialogCard}>
+                              <Text style={styles.dialogText}>
+                                   Enter a Filename:
+                              </Text>
+                              <TextInput
+                                   style={styles.dialogTextInput}
+                                   textAlignVertical="top"
+                                   value={userFilenameString}
+                                   onChangeText={(val) => {
+                                        setUserFileNameString(val);
+                                   }}
+                              />
+                         </View>
+                         <View style={{width:"70%",paddingTop:10}}>
+                              <Button
+                                   title="Choose File Save Location"
+                                   onPress={() => {
+                                        fileExportFunction(userFilenameString);
+                                        setModalIsVisible(false);
+                                   }}
+                              ></Button>
+                              <Button title="Cancel Export" onPress={()=>{
+                                   setModalIsVisible(false)
+                              }}/>
+                         </View>
+                    </View>
+               </>
+          );
+     }
 }
+
+const styles = StyleSheet.create({
+     dialogCard: {
+          backgroundColor: "black",
+          width: "70%",
+          borderRadius: 20,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: 20,
+          paddingBottom: 20,
+     },
+     dialogText: {
+          color: "white",
+          margin: 5,
+     },
+     dialogTextInput: {
+          borderWidth: 1,
+          borderColor: "black",
+          padding: 4,
+          margin: 5,
+          backgroundColor: "white",
+          width: "70%",
+          borderRadius: 20,
+          paddingVertical: 5,
+          paddingHorizontal: 3,
+          marginVertical: 5,
+     },
+});
