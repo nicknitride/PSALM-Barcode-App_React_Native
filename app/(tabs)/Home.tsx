@@ -193,20 +193,16 @@ export default function App() {
                                              }
                                              */
                                                   if (recentItemExists) {
+                                                       
                                                        router.push(
                                                             `/itemview/recent/${QRValue}`
                                                        );
                                                   } else {
+                                                       // console.log(`/itemview/${QRValue}`)
                                                        router.push(
                                                             `/itemview/${QRValue}`
                                                        );
                                                   }
-                                             }}
-                                        ></Button>
-                                        <Button
-                                             title="Scan Another Instead"
-                                             onPress={() => {
-                                                  setQRValue("");
                                              }}
                                         ></Button>
                                    </View>

@@ -6,6 +6,7 @@ import {
      Button,
      Platform,
      ScrollView,
+     Modal
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import { useState, useEffect } from "react";
@@ -19,7 +20,7 @@ import { initDb, insertDataDbSingle } from "../DatabaseFunctions";
 export default function TestParsePage() {
      const db = SQLite.openDatabaseSync("test.db");
      initDb();
-
+     const [modalIsVisible, setModalIsVisible] = useState(false);
      const [csv_string, setCsv_String] = useState();
      const [globalFileContent, SetGlobalFileContent] = useState();
      const [fileLocation, setFileLocation] = useState();
