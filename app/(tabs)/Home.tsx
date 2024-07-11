@@ -136,12 +136,12 @@ export default function App() {
                {QRValue && (
                     <>
                          <View style={{ margin: 20 }}>
-                              <Button
+                              {(itemListLength(QRValue)!==1) && <Button
                                    title="Scan Another Instead"
                                    onPress={() => {
                                         setQRValue("");
                                    }}
-                              ></Button>
+                              ></Button>}
                               {itemListLength(QRValue) > 1 && (
                                    <>
                                         <Text
@@ -184,16 +184,7 @@ export default function App() {
                                                        "Submit clicked for: " +
                                                             QRValue
                                                   );
-                                                  /* 
-                                             if (recent_item){
-                                             router.push(`/itemview/${QRValue}`)
-                                             }
-                                             else{
-                                             router.push(`/itemview/recent_${QRValue}`)
-                                             }
-                                             */
                                                   if (recentItemExists) {
-                                                       
                                                        router.push(
                                                             `/itemview/recent/${QRValue}`
                                                        );
@@ -204,6 +195,12 @@ export default function App() {
                                                        );
                                                   }
                                              }}
+                                        ></Button>
+                                        <Button
+                                        title="Scan Another Instead"
+                                        onPress={()=>{
+                                             setQRValue("");
+                                        }}
                                         ></Button>
                                    </View>
                               )}

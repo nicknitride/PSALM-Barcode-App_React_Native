@@ -17,10 +17,24 @@ export default function itemEditView() {
      dbfunc.initDb();
      const { recentId, desc } = useLocalSearchParams();
      console.log("Desc: ----------" + desc);
-     const correspondingRow = db.getFirstSync<dbEntry>(
+     const [sqlString, setSqlString] = useState<string>();
+
+     let correspondingRow : any =  "";
+     const multiItemRow = db.getFirstSync<dbEntry>(
           `SELECT * FROM recent_items WHERE New_Property_Number = $new_property_number AND Description = $description`,
           { $new_property_number: `${recentId}`, $description: `${desc}` }
      );
+     const singleItemRow = db.getFirstSync<dbEntry>(
+          `SELECT * FROM recent_items WHERE New_Property_Number = $new_property_number`,
+          { $new_property_number: `${recentId}`}
+     );
+
+     if (desc ===undefined){
+          correspondingRow = singleItemRow
+     }
+     else{
+          correspondingRow = multiItemRow
+     }
 
      const [condition, setCondition] = useState(correspondingRow?.Condition);
      const [remark, setRemark] = useState(correspondingRow?.Remarks);
