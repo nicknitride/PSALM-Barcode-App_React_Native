@@ -50,8 +50,18 @@ export function escapeQuotes(inputString:any) {
     return finalString
 }
 
+
 export const quoter = (stringy: string) => {
     return stringy.replace("'","''").replace('"', '""');
+}
+
+export function escapeSingleQuotes(input) {
+    return input.replace(/'/g, "\\'");
+}
+
+export function toTemplateLiteral(input) {
+    const escapedInput = escapeSingleQuotes(input);
+    return `\`${escapedInput}\``;
 }
 
 export const insertDataDbSingle = (
@@ -114,7 +124,7 @@ export const insertToRecent = (
     const db = startDb();
     let editedDesc = escapeQuotes(`${Desc}`);
     console.log(editedDesc)
-    db.execSync(`INSERT INTO recent_items (
+    db.runSync(`INSERT INTO recent_items (
               Article_Item,
               Description,
               Old_Property_Number,
@@ -129,7 +139,7 @@ export const insertToRecent = (
           )
           VALUES (
               "${articleItem}",
-              "${Desc}",
+              $desc,
               "${Old_Prop_Num}",
               "${New_Prop_Num}",
               "${Unit_of_Measure}",
@@ -139,7 +149,7 @@ export const insertToRecent = (
               "${Location_Whereabouts}",
               "${Condition}",
               "${Remarks}"
-          );`);
+          );`,{$desc:`${Desc}`});
 };
 
 export const updateRecentTable = (

@@ -1,7 +1,7 @@
 import { View, ScrollView, Text, StyleSheet, Pressable } from "react-native";
 import * as dbFunc from "../DatabaseFunctions";
 import { router } from "expo-router";
-import { Button } from "react-native";
+import Button  from "../styled-components/FullWidthWhiteButton";
 
 interface Items {
      items: {
@@ -26,19 +26,12 @@ interface ItemEditOnlyProps {
 
 export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) => {
      const db = dbFunc.startDb();
-     console.log(
-          "JSON of Items (Inside ItemEditOnly) ---------------------------",
-          JSON.stringify(items)
-     );
      const recents = db.getFirstSync(
-          `SELECT * FROM recent_items WHERE New_Property_Number= ? AND Description= ?`,
-          [`${items.New_Property_Number}`,`${items.Description}`]
+          `SELECT * FROM recent_items WHERE New_Property_Number= $npm AND Description= $desc;`,
+          {$npm:`${items.New_Property_Number}`,$desc:`${items.Description}`}
      );
-
-     // console.log("Recent DB Item Entry: ---------------------------------"+JSON.stringify(recents));
      return (
           <>
-          {/* {console.log("Item Entry: -----------"+JSON.stringify(items))} */}
                <View style={cardstyle.card} key={items.New_Property_Number}>
                     <Text style={[cardstyle.textStyle, cardstyle.header]}>
                          {items.Article_Item}
@@ -53,6 +46,7 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                          Description: {items.Description}
                     </Text>
                     { (!recents || recents===null) && <>
+                    <Text style={cardstyle.textStyle}>Recents is null {JSON.stringify(recents)}</Text>
                     <Text style={cardstyle.textStyle}>
                          Condition: {items.Condition}
                     </Text>
@@ -61,18 +55,17 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                     </Text>
                     </>}
                     { (recents!==null || recents) && <>
+                         <Text style={cardstyle.textStyle}>Recents is not null</Text>
                     <Text style={cardstyle.textStyle}>
                          Condition: {recents.Condition}
                     </Text>
                     <Text style={cardstyle.textStyle}>
                          Remarks: {recents.Remarks}
                     </Text>
-
-                    <Text style={cardstyle.textStyle}>{`Recents Result: ${recents}`}</Text>
                     </>}
                     
                     <Button
-                         title="edit"
+                         title="Edit"
                          onPress={() => {
                               // console.log("Recents is (ItemEdit Only) :"+JSON.stringify(recents))
                               if (recents) {
@@ -101,18 +94,6 @@ const cardstyle = StyleSheet.create({
           borderRadius: 20,
           padding: 20,
           marginRight: 15,
-     },
-     button: {
-          padding: 10,
-          backgroundColor: "white",
-          color: "white",
-          borderRadius: 15,
-          marginVertical: 5,
-          paddingHorizontal: 15,
-          paddingVertical: 10,
-     },
-     buttonPressed: {
-          backgroundColor: "gray", // Change to a different color when pressed
      },
      textStyle: {
           color: "white",

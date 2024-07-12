@@ -156,9 +156,9 @@ export default function App() {
                                         <ScrollView>
                                              {container.map((item) => (
                                                   <>
-                                                       {console.log(
+                                                       {/* {console.log(
                                                             "\n \n \n \n \nItem Description Inside Multi Item Container"+item.Description
-                                                       )}
+                                                       )} */}
                                                        <ItemEditOnly
                                                             items={item}
                                                             key={`${item.New_Property_Number}${item.Description}`}
