@@ -13,25 +13,36 @@ import * as dbFunc from "../DatabaseFunctions";
 export default function itemEditView() {
      const db = dbfunc.startDb();
      dbfunc.initDb();
-     const { id } = useLocalSearchParams();
-     // console.log("DESC & ID: --------------------"+id)
-     const correspondingRow = db.getFirstSync<dbEntry>(
-          `SELECT * FROM item WHERE New_Property_Number = $new_property_number`, 
-          {$new_property_number: `${id}`}
+     const { id, desc } = useLocalSearchParams();
+     let correspondingRow: any;
+     const multiItemRow = db.getFirstSync<dbEntry>(
+          `SELECT * FROM item WHERE New_Property_Number = $new_property_number AND Description = $description`,
+          { $new_property_number: `${id}`, $description: `${desc}` }
+     );
+     const singleItemRow = db.getFirstSync<dbEntry>(
+          `SELECT * FROM item WHERE New_Property_Number = $new_property_number`,
+          { $new_property_number: `${id}` }
      );
 
+     if (desc === undefined ) {
+          console.log("Description is undefined (inside id.tsx)")
+          correspondingRow = singleItemRow;
+     } else {
+          console.log("Description is defined (inside id.tsx)" + desc)
+          correspondingRow = multiItemRow;
+     }
+     console.log("Corresponding Row: "+correspondingRow)
+
      const [condition, setCondition] = useState(correspondingRow?.Condition);
-     const [remark, SetRemark] = useState(
-          correspondingRow?.Remarks
-     );
-     // console.log("Corresponding Row: " + JSON.stringify(correspondingRow));
+     const [remark, SetRemark] = useState(correspondingRow?.Remarks);
      return (
           <>
                <View style={styles.container}>
-                    <View >
+                    <View>
                          <Stack.Screen options={{ headerTitle: "Edit View" }} />
                          <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                              Editing Item: {id} - {correspondingRow?.Article_Item}
+                              Editing Item: {id} -{" "}
+                              {correspondingRow?.Article_Item}
                          </Text>
                          <ScrollView>
                               {correspondingRow !== null && (
@@ -66,8 +77,8 @@ export default function itemEditView() {
                                                   />
                                              </ScrollView>
                                              <ScrollView>
-                                             <Text>Remarks: </Text>
-                                             <TextInput
+                                                  <Text>Remarks: </Text>
+                                                  <TextInput
                                                        multiline={true}
                                                        placeholder={`${remark}`}
                                                        textAlignVertical="top"
@@ -77,9 +88,7 @@ export default function itemEditView() {
                                                        onChangeText={(
                                                             change
                                                        ) => {
-                                                            SetRemark(
-                                                                 change
-                                                            );
+                                                            SetRemark(change);
                                                        }}
                                                   />
                                              </ScrollView>
@@ -98,10 +107,12 @@ export default function itemEditView() {
                                    title="Submit"
                                    onPress={(data: any) => {
                                         console.log("Submit Clicked");
-                                        console.log(condition,remark);
+                                        console.log(condition, remark);
                                         dbFunc.insertToRecent(
                                              correspondingRow?.Article_Item,
-                                             dbFunc.quoter(correspondingRow?.Description),
+                                             dbFunc.quoter(
+                                                  correspondingRow?.Description
+                                             ),
                                              correspondingRow?.Old_Property_Number,
                                              correspondingRow?.New_Property_Number,
                                              correspondingRow?.Unit_of_Measure,
@@ -112,7 +123,7 @@ export default function itemEditView() {
                                              condition,
                                              remark
                                         );
-                                        router.push('/(tabs)/InventoryList')
+                                        router.push("/(tabs)/InventoryList");
                                    }}
                               />
                          </View>

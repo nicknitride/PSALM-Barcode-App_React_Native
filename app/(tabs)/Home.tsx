@@ -27,7 +27,7 @@ export default function App() {
           const out = db.getAllSync(
                `SELECT * FROM item WHERE New_Property_Number = "${result}";`
           );
-          console.log("itemList Output: "+JSON.stringify(out))
+          // console.log("itemList Output: "+JSON.stringify(out))
           return out;
      };
 
@@ -91,10 +91,10 @@ export default function App() {
                                              // console.log("--- Result ---  ", result);
                                              setQRValue(`${result.raw}`);
                                              setContainer(itemList(result.raw));
-                                             console.log(
-                                                  "---  RESULT.RAW  ---",
-                                                  result.raw
-                                             );
+                                             // console.log(
+                                             //      "---  RESULT.RAW  ---",
+                                             //      result.raw
+                                             // );
                                              // const itemList = db.getFirstSync(`SELECT * FROM item WHERE New_Property_Number = "${result.raw}";`);
                                              // {container.map((item) => (
                                              //      <>
@@ -110,11 +110,11 @@ export default function App() {
                                              } else {
                                                   setRecentItemExists(true);
                                              }
-                                             console.log(
-                                                  "Recent Item Exists: ",
-                                                  recentItemExists,
-                                                  recentItem
-                                             );
+                                             // console.log(
+                                             //      "Recent Item Exists: ",
+                                             //      recentItemExists,
+                                             //      recentItem
+                                             // );
                                         }
                                    }}
                               >
@@ -154,16 +154,10 @@ export default function App() {
                                              Detected Item no.: {QRValue}
                                         </Text>
                                         <ScrollView>
-                                             {console.log(
-                                                  "Containerrrrrrrrrrrrrrrr: " +
-                                                       `${JSON.stringify(
-                                                            container
-                                                       )}`
-                                             )}
                                              {container.map((item) => (
                                                   <>
                                                        {console.log(
-                                                            item.Description
+                                                            "\n \n \n \n \nItem Description Inside Multi Item Container"+item.Description
                                                        )}
                                                        <ItemEditOnly
                                                             items={item}
@@ -180,10 +174,10 @@ export default function App() {
                                         <Button
                                              title="Edit Detected Item"
                                              onPress={() => {
-                                                  console.log(
-                                                       "Submit clicked for: " +
-                                                            QRValue
-                                                  );
+                                                  // console.log(
+                                                  //      "Submit clicked for: " +
+                                                  //           QRValue
+                                                  // );
                                                   if (recentItemExists) {
                                                        router.push(
                                                             `/itemview/recent/${QRValue}`

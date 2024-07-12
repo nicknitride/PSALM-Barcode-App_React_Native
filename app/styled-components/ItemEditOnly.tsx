@@ -27,17 +27,18 @@ interface ItemEditOnlyProps {
 export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) => {
      const db = dbFunc.startDb();
      console.log(
-          "JSON of Items---------------------------",
+          "JSON of Items (Inside ItemEditOnly) ---------------------------",
           JSON.stringify(items)
      );
      const recents = db.getFirstSync(
-          `SELECT * FROM recent_items WHERE New_Property_Number="${items.New_Property_Number}" AND Description="${dbFunc.quoter(items.Description)}";`
+          `SELECT * FROM recent_items WHERE New_Property_Number= ? AND Description= ?`,
+          [`${items.New_Property_Number}`,`${items.Description}`]
      );
 
-     console.log("Recent DB Item Entry: ---------------------------------"+JSON.stringify(recents));
+     // console.log("Recent DB Item Entry: ---------------------------------"+JSON.stringify(recents));
      return (
           <>
-          {console.log("Item Entry: -----------"+JSON.stringify(items))}
+          {/* {console.log("Item Entry: -----------"+JSON.stringify(items))} */}
                <View style={cardstyle.card} key={items.New_Property_Number}>
                     <Text style={[cardstyle.textStyle, cardstyle.header]}>
                          {items.Article_Item}
@@ -66,12 +67,14 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                     <Text style={cardstyle.textStyle}>
                          Remarks: {recents.Remarks}
                     </Text>
+
+                    <Text style={cardstyle.textStyle}>{`Recents Result: ${recents}`}</Text>
                     </>}
                     
                     <Button
                          title="edit"
                          onPress={() => {
-                              console.log("Recents is (ItemEdit Only) :"+JSON.stringify(recents))
+                              // console.log("Recents is (ItemEdit Only) :"+JSON.stringify(recents))
                               if (recents) {
                                    router.push({
                                        pathname: `/itemview/recent/${items.New_Property_Number}`,
