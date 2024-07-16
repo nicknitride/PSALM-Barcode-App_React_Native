@@ -15,13 +15,13 @@ import Papa from "papaparse";
 import { router } from "expo-router";
 import { initDb, insertDataDbSingle } from "../DatabaseFunctions";
 import Button from "../styled-components/FullWidthButton";
+import ImportCSVButton from "../styled-components/ImportCSVButton";
 
 export default function TestParsePage() {
      const db = SQLite.openDatabaseSync("test.db");
      initDb();
      const [modalIsVisible, setModalIsVisible] = useState(false);
      const [userFilenameString, setUserFileNameString] = useState("");
-
      const fileExportFunction = async (stringName: string) => {
           console.log("String Name for Export: " + stringName);
           let outputString: string;
@@ -131,13 +131,14 @@ export default function TestParsePage() {
           return (
                <View style={{ flex: 1 ,justifyContent:"center",alignItems:"center"}}>
                     <View style={{width:"80%"}}>
-                    <Button
-                         title="Import CSV"
+                    <ImportCSVButton
+                         Toptitle={`Import CSV`}
+                         Bottomtitle={`(CLEARS RECENTLY SCANNED ITEMS)`}
                          onPress={() => {
                               getFile();
                               console.log("Import clicked");
                          }}
-                    ></Button>
+                    ></ImportCSVButton>
                     <Button
                          title="Export CSV"
                          onPress={() => {

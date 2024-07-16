@@ -132,7 +132,7 @@ export default function itemEditView() {
                                                   </View>
                                                   <View style={styles.card}>
                                                        <ScrollView>
-                                                            <Text>
+                                                            <Text style={styles.cardTextHeading}>
                                                                  Remarks:{" "}
                                                             </Text>
                                                             <TextInput
