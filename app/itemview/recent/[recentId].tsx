@@ -163,7 +163,8 @@ export default function itemEditView() {
                                    )}
                               </ScrollView>
                               <View style={{ flexDirection: "row"}}>
-                                   <View style={{ width: "50%"}}>
+                                   <View style={{width:"80%"}}>
+                                   <View>
                                         <Button
                                              title="Cancel"
                                              onPress={() => {
@@ -171,7 +172,8 @@ export default function itemEditView() {
                                              }}
                                         ></Button>
                                    </View>
-                                   <View style={{ width: "50%" }}>
+                                   </View>
+                                   <View>
                                         <Button
                                              title="Update Item"
                                              onPress={(data: any) => {
@@ -196,6 +198,7 @@ export default function itemEditView() {
                                              }}
                                         />
                                    </View>
+                                   
                               </View>
                          </View>
                     </View>
