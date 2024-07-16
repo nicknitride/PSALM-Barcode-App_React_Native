@@ -1,4 +1,4 @@
-rootProject.name = 'pardines-barcode'
+rootProject.name = 'PSALM Barcode'
 
 dependencyResolutionManagement {
   versionCatalogs {

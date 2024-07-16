@@ -46,7 +46,6 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                          Description: {items.Description}
                     </Text>
                     { (!recents || recents===null) && <>
-                    <Text style={cardstyle.textStyle}>Recents is null {JSON.stringify(recents)}</Text>
                     <Text style={cardstyle.textStyle}>
                          Condition: {items.Condition}
                     </Text>
@@ -55,7 +54,6 @@ export const ItemEditOnly: React.FC<ItemEditOnlyProps> = ({ items, onClick }) =>
                     </Text>
                     </>}
                     { (recents!==null || recents) && <>
-                         <Text style={cardstyle.textStyle}>Recents is not null</Text>
                     <Text style={cardstyle.textStyle}>
                          Condition: {recents.Condition}
                     </Text>

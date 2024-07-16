@@ -8,9 +8,17 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "android":{
+      "buildType":"apk"
+    }
     },
-    "production": {}
+    
+    "production": {
+      "env":{
+        "ANDROID_SDK_ROOT":"/Users/je/Library/Android/sdk"
+      }
+    }
   },
   "submit": {
     "production": {}
