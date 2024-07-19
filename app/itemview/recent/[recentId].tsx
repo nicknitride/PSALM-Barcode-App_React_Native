@@ -170,9 +170,10 @@ export default function itemEditView() {
                               <View
                                    style={{
                                         flexDirection: "row",
+                                        justifyContent:"space-between"
                                    }}
                               >
-                                   <View style={{width:"50%"}}>
+                                   <View style={{width:"45%"}}>
                                         <Button
                                              title="Cancel"
                                              onPress={() => {
@@ -180,7 +181,7 @@ export default function itemEditView() {
                                              }}
                                         ></Button>
                                    </View>
-                                   <View style={{width:"50%"}}>
+                                   <View style={{width:"45%"}}>
                                         <Button
                                              title="Update Item"
                                              onPress={(data: any) => {
