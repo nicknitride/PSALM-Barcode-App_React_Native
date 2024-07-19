@@ -147,9 +147,9 @@ export const insertToRecent = (
               "${Quantity_per_Property_Card}",
               "${Quantity_per_Physical_Count}",
               "${Location_Whereabouts}",
-              "${Condition}",
-              "${Remarks}"
-          );`,{$desc:`${Desc}`});
+              $cond,
+              $remark
+          );`,{$desc:`${Desc}`,$cond:`${Condition}`,$remark:`${Remarks}`});
 };
 
 export const updateRecentTable = (

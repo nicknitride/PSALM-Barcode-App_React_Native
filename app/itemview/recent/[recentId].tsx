@@ -1,4 +1,5 @@
 import { View, Text, ScrollView, TextInput, StyleSheet } from "react-native";
+// import Button from "../../styled-cmponents/FullWidthButton";
 import Button from "../../styled-components/FullWidthButton";
 import { Stack, useLocalSearchParams } from "expo-router";
 import * as dbfunc from "../../DatabaseFunctions";
@@ -132,7 +133,11 @@ export default function itemEditView() {
                                                   </View>
                                                   <View style={styles.card}>
                                                        <ScrollView>
-                                                            <Text style={styles.cardTextHeading}>
+                                                            <Text
+                                                                 style={
+                                                                      styles.cardTextHeading
+                                                                 }
+                                                            >
                                                                  Remarks:{" "}
                                                             </Text>
                                                             <TextInput
@@ -162,9 +167,12 @@ export default function itemEditView() {
                                         </>
                                    )}
                               </ScrollView>
-                              <View style={{ flexDirection: "row"}}>
-                                   <View style={{width:"80%"}}>
-                                   <View>
+                              <View
+                                   style={{
+                                        flexDirection: "row",
+                                   }}
+                              >
+                                   <View style={{width:"50%"}}>
                                         <Button
                                              title="Cancel"
                                              onPress={() => {
@@ -172,8 +180,7 @@ export default function itemEditView() {
                                              }}
                                         ></Button>
                                    </View>
-                                   </View>
-                                   <View>
+                                   <View style={{width:"50%"}}>
                                         <Button
                                              title="Update Item"
                                              onPress={(data: any) => {
@@ -198,7 +205,6 @@ export default function itemEditView() {
                                              }}
                                         />
                                    </View>
-                                   
                               </View>
                          </View>
                     </View>
@@ -221,7 +227,7 @@ const styles = StyleSheet.create({
      outerContainer: {
           flex: 1,
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "center"
      },
      innerContainer: {
           justifyContent: "center",
