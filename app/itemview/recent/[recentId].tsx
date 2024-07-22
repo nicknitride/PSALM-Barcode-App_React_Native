@@ -18,7 +18,6 @@ export default function itemEditView() {
      dbfunc.initDb();
      const { recentId, desc } = useLocalSearchParams();
      console.log("Desc: ----------" + desc);
-     const [sqlString, setSqlString] = useState<string>();
 
      let correspondingRow: any = "";
      const multiItemRow = db.getFirstSync<dbEntry>(
