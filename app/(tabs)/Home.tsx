@@ -136,12 +136,14 @@ export default function App() {
                {QRValue && (
                     <>
                          <View style={{ margin: 20 }}>
-                              {(itemListLength(QRValue)!==1) && <Button
-                                   title="Scan Another Instead"
-                                   onPress={() => {
-                                        setQRValue("");
-                                   }}
-                              ></Button>}
+                              {itemListLength(QRValue) !== 1 && (
+                                   <Button
+                                        title="Scan Another Instead"
+                                        onPress={() => {
+                                             setQRValue("");
+                                        }}
+                                   ></Button>
+                              )}
                               {itemListLength(QRValue) > 1 && (
                                    <>
                                         <Text
@@ -191,10 +193,10 @@ export default function App() {
                                              }}
                                         ></Button>
                                         <Button
-                                        title="Scan Another Instead"
-                                        onPress={()=>{
-                                             setQRValue("");
-                                        }}
+                                             title="Scan Another Instead"
+                                             onPress={() => {
+                                                  setQRValue("");
+                                             }}
                                         ></Button>
                                    </View>
                               )}

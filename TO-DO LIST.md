@@ -1,4 +1,11 @@
 TO-DO LIST:
+- Add extra field for BLOB pictures of object
+- Create new record
+- Upload to OneDrive
+- Generate QR code scanner
+- 
+
+
 -    Camera Screen
      -    (itemview/[id].tsx)
      -    add a db query (TABLE item) that retrieves the info based on the scanned id
