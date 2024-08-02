@@ -37,9 +37,13 @@ export default function addItemPage() {
                                    options={{ headerTitle: "Add an Entry" }}
                               />
                               <View style={styles.card}>
-                                   {id && (
+                                   {id ? (
                                         <Text style={styles.cardTextBody}>
                                              ID Number Detected: {id}
+                                        </Text>
+                                   ) : (
+                                        <Text style={styles.cardTextBody}>
+                                             Enter New Property Number:
                                         </Text>
                                    )}
                                    <TextInput
@@ -154,10 +158,13 @@ export default function addItemPage() {
                                                             styles.cardTextHeading
                                                        }
                                                   >
-                                                       Quantity per Property Card:
+                                                       Quantity per Property
+                                                       Card:
                                                   </Text>
                                                   <TextInput
-                                                       value={Quantity_per_Property_Card}
+                                                       value={
+                                                            Quantity_per_Property_Card
+                                                       }
                                                        onChangeText={(
                                                             change
                                                        ) => {
@@ -177,10 +184,13 @@ export default function addItemPage() {
                                                             styles.cardTextHeading
                                                        }
                                                   >
-                                                       Quantity per Physical Count:
+                                                       Quantity per Physical
+                                                       Count:
                                                   </Text>
                                                   <TextInput
-                                                       value={Quantity_per_Physical_Count}
+                                                       value={
+                                                            Quantity_per_Physical_Count
+                                                       }
                                                        onChangeText={(
                                                             change
                                                        ) => {
@@ -203,7 +213,9 @@ export default function addItemPage() {
                                                        Location Whereabouts:
                                                   </Text>
                                                   <TextInput
-                                                       value={Location_Whereabouts}
+                                                       value={
+                                                            Location_Whereabouts
+                                                       }
                                                        onChangeText={(
                                                             change
                                                        ) => {
@@ -253,9 +265,7 @@ export default function addItemPage() {
                                                        onChangeText={(
                                                             change
                                                        ) => {
-                                                            set_Remarks(
-                                                                 change
-                                                            );
+                                                            set_Remarks(change);
                                                        }}
                                                        style={styles.input}
                                                        multiline={true}
