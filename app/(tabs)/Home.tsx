@@ -33,7 +33,8 @@ export default function App() {
 
      const itemListLength = (result: any) => {
           const out = db.getAllSync(
-               `SELECT * FROM item WHERE New_Property_Number = "${result}";`
+               `SELECT * FROM item WHERE New_Property_Number = "${result}" UNION 
+               SELECT * FROM recent_items WHERE New_Property_Number = "${result}";`
           );
           return out.length;
      };
@@ -196,6 +197,21 @@ export default function App() {
                                              title="Scan Another Instead"
                                              onPress={() => {
                                                   setQRValue("");
+                                             }}
+                                        ></Button>
+                                   </View>
+                              )}
+
+                              {itemListLength(QRValue) === 0 && (
+                                   <View>
+                                        <Button
+                                             title="Add New Scanned Item"
+                                             onPress={ () => {
+                                                  router.push({
+                                                       pathname: `itemview/create`,
+                                                       params: {id: `${QRValue}`}
+                                                  }
+                                                  )
                                              }}
                                         ></Button>
                                    </View>
