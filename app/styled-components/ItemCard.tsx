@@ -41,6 +41,18 @@ export const ItemCard: React.FC<ItemCardProps> = ({ items, onClick }) => {
                          Description: {items.Description}
                     </Text>
                     <Text style={cardstyle.textStyle}>
+                         Unit of Measure: {items.Unit_of_Measure}
+                    </Text>
+                    <Text style={cardstyle.textStyle}>
+                         Unit Value: {items.Unit_Value}
+                    </Text>
+                    <Text style={cardstyle.textStyle}>
+                         Quantity per Property Card: {items.Quantity_per_Property_Card}
+                    </Text>
+                    <Text style={cardstyle.textStyle}>
+                         Quantity per Physical Count: {items.Quantity_per_Physical_Count}
+                    </Text>
+                    <Text style={cardstyle.textStyle}>
                          Condition: {items.Condition}
                     </Text>
                     <Text style={cardstyle.textStyle}>
