@@ -35,6 +35,12 @@ export default function itemEditView() {
           correspondingRow = multiItemRow;
      }
 
+     const [Description, set_Description] = useState(correspondingRow?.Description)
+     const [Unit_of_Measure, set_Unit_of_Measure] = useState(correspondingRow?.Unit_of_Measure)
+     const [Unit_Value, set_Unit_Value] = useState(correspondingRow?.Unit_Value)
+     const [Quantity_per_Property_Card, set_Quantity_per_Property_Card] = useState(correspondingRow?.Quantity_per_Property_Card)
+     const [Quantity_per_Physical_Count, set_Quantity_per_Physical_Count] =useState(correspondingRow?.Quantity_per_Physical_Count)
+     const [Location_Whereabouts, set_Location_Whereabouts] = useState(correspondingRow?.Location_Whereabouts)
      const [condition, setCondition] = useState(correspondingRow?.Condition);
      const [remark, setRemark] = useState(correspondingRow?.Remarks);
 
@@ -95,6 +101,210 @@ export default function itemEditView() {
                                                                  correspondingRow.Description
                                                             }
                                                        </Text>
+                                                  </View>
+                                                  <View style={styles.card}>
+                                                       <Text
+                                                            style={
+                                                                 styles.cardTextHeading
+                                                            }
+                                                       >
+                                                            Description:
+                                                       </Text>
+                                                       <ScrollView>
+                                                            <TextInput
+                                                                 multiline={
+                                                                      true
+                                                                 }
+                                                                 placeholder={`${Description}`}
+                                                                 textAlignVertical="top"
+                                                                 numberOfLines={
+                                                                      4
+                                                                 }
+                                                                 style={
+                                                                      styles.input
+                                                                 }
+                                                                 value={
+                                                                      Description
+                                                                 }
+                                                                 onChangeText={(
+                                                                      change
+                                                                 ) => {
+                                                                      set_Description(
+                                                                           change
+                                                                      );
+                                                                 }}
+                                                            />
+                                                       </ScrollView>
+                                                  </View>
+                                                  <View style={styles.card}>
+                                                       <Text
+                                                            style={
+                                                                 styles.cardTextHeading
+                                                            }
+                                                       >
+                                                            Unit of Measure:
+                                                       </Text>
+                                                       <ScrollView>
+                                                            <TextInput
+                                                                 multiline={
+                                                                      true
+                                                                 }
+                                                                 placeholder={`${Unit_of_Measure}`}
+                                                                 textAlignVertical="top"
+                                                                 numberOfLines={
+                                                                      4
+                                                                 }
+                                                                 style={
+                                                                      styles.input
+                                                                 }
+                                                                 value={
+                                                                      Unit_of_Measure
+                                                                 }
+                                                                 onChangeText={(
+                                                                      change
+                                                                 ) => {
+                                                                      set_Unit_of_Measure(
+                                                                           change
+                                                                      );
+                                                                 }}
+                                                            />
+                                                       </ScrollView>
+                                                  </View>
+                                                  <View style={styles.card}>
+                                                       <Text
+                                                            style={
+                                                                 styles.cardTextHeading
+                                                            }
+                                                       >
+                                                            Unit Value:
+                                                       </Text>
+                                                       <ScrollView>
+                                                            <TextInput
+                                                                 multiline={
+                                                                      true
+                                                                 }
+                                                                 placeholder={`${Unit_Value}`}
+                                                                 textAlignVertical="top"
+                                                                 numberOfLines={
+                                                                      4
+                                                                 }
+                                                                 style={
+                                                                      styles.input
+                                                                 }
+                                                                 value={
+                                                                      condition
+                                                                 }
+                                                                 onChangeText={(
+                                                                      change
+                                                                 ) => {
+                                                                      set_Unit_Value(
+                                                                           change
+                                                                      );
+                                                                 }}
+                                                            />
+                                                       </ScrollView>
+                                                  </View>
+                                                  <View style={styles.card}>
+                                                       <Text
+                                                            style={
+                                                                 styles.cardTextHeading
+                                                            }
+                                                       >
+                                                            Quantity per Property Card:
+                                                       </Text>
+                                                       <ScrollView>
+                                                            <TextInput
+                                                                 multiline={
+                                                                      true
+                                                                 }
+                                                                 placeholder={`${Quantity_per_Property_Card}`}
+                                                                 textAlignVertical="top"
+                                                                 numberOfLines={
+                                                                      4
+                                                                 }
+                                                                 style={
+                                                                      styles.input
+                                                                 }
+                                                                 value={
+                                                                      Quantity_per_Property_Card
+                                                                 }
+                                                                 onChangeText={(
+                                                                      change
+                                                                 ) => {
+                                                                      set_Quantity_per_Property_Card(
+                                                                           change
+                                                                      );
+                                                                 }}
+                                                            />
+                                                       </ScrollView>
+                                                  </View>
+                                                  <View style={styles.card}>
+                                                       <Text
+                                                            style={
+                                                                 styles.cardTextHeading
+                                                            }
+                                                       >
+                                                            Quantity per Physical Count:
+                                                       </Text>
+                                                       <ScrollView>
+                                                            <TextInput
+                                                                 multiline={
+                                                                      true
+                                                                 }
+                                                                 placeholder={`${Quantity_per_Physical_Count}`}
+                                                                 textAlignVertical="top"
+                                                                 numberOfLines={
+                                                                      4
+                                                                 }
+                                                                 style={
+                                                                      styles.input
+                                                                 }
+                                                                 value={
+                                                                      Quantity_per_Physical_Count
+                                                                 }
+                                                                 onChangeText={(
+                                                                      change
+                                                                 ) => {
+                                                                      set_Quantity_per_Physical_Count(
+                                                                           change
+                                                                      );
+                                                                 }}
+                                                            />
+                                                       </ScrollView>
+                                                  </View>
+                                                  <View style={styles.card}>
+                                                       <Text
+                                                            style={
+                                                                 styles.cardTextHeading
+                                                            }
+                                                       >
+                                                            Location Whereabouts:
+                                                       </Text>
+                                                       <ScrollView>
+                                                            <TextInput
+                                                                 multiline={
+                                                                      true
+                                                                 }
+                                                                 placeholder={`${Location_Whereabouts}`}
+                                                                 textAlignVertical="top"
+                                                                 numberOfLines={
+                                                                      4
+                                                                 }
+                                                                 style={
+                                                                      styles.input
+                                                                 }
+                                                                 value={
+                                                                      Location_Whereabouts
+                                                                 }
+                                                                 onChangeText={(
+                                                                      change
+                                                                 ) => {
+                                                                      set_Location_Whereabouts(
+                                                                           change
+                                                                      );
+                                                                 }}
+                                                            />
+                                                       </ScrollView>
                                                   </View>
                                                   <View style={styles.card}>
                                                        <Text
