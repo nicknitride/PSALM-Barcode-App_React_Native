@@ -2,6 +2,16 @@ import { View, ScrollView, Text, StyleSheet, Pressable } from "react-native";
 import * as dbFunc from "../DatabaseFunctions";
 import { router } from "expo-router";
 
+function itemCardText(name, value) {
+     return (
+          <>
+               <Text style={cardstyle.textStyle}>
+                    {name}: {value}
+               </Text>
+          </>
+     );
+}
+
 interface Items {
      items: {
           Article_Item: string;
@@ -31,33 +41,16 @@ export const ItemCard: React.FC<ItemCardProps> = ({ items, onClick }) => {
                     <Text style={[cardstyle.textStyle, cardstyle.header]}>
                          {items.Article_Item}
                     </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Old. Prop. Number: {items.Old_Property_Number}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         New. Prop. Number: {items.New_Property_Number}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Description: {items.Description}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Unit of Measure: {items.Unit_of_Measure}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Unit Value: {items.Unit_Value}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Quantity per Property Card: {items.Quantity_per_Property_Card}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Quantity per Physical Count: {items.Quantity_per_Physical_Count}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Condition: {items.Condition}
-                    </Text>
-                    <Text style={cardstyle.textStyle}>
-                         Remarks: {items.Remarks}
-                    </Text>
+                    {itemCardText("Old. Prop. Number", items.Old_Property_Number)}
+                    {itemCardText("New. Prop. Number", items.New_Property_Number)}
+                    {itemCardText("Description", items.Description)}
+                    {itemCardText("Unit of Measure", items.Unit_of_Measure)}
+                    {itemCardText("Unit Value", items.Unit_Value)}
+                    {itemCardText("Quantity per Property Card", items.Quantity_per_Property_Card)}
+                    {itemCardText("Quantity per Physical Count", items.Quantity_per_Physical_Count)}
+                    {itemCardText("Location Whereabouts", items.Location_Whereabouts)}
+                    {itemCardText("Condition", items.Condition)}
+                    {itemCardText("Remarks", items.Remarks)}
 
                     <View
                          style={{
@@ -72,10 +65,16 @@ export const ItemCard: React.FC<ItemCardProps> = ({ items, onClick }) => {
                                    pressed && cardstyle.buttonPressed,
                               ]}
                               onPress={() => {
-                                   console.log("\n \n \n Description In Item Card (Inventory List Card): -------"+items.Description+"\n \n \n")
+                                   console.log(
+                                        "\n \n \n Description In Item Card (Inventory List Card): -------" +
+                                             items.Description +
+                                             "\n \n \n"
+                                   );
                                    router.push({
-                                       pathname: `/itemview/recent/${items.New_Property_Number}`,
-                                       params: {desc: `${items.Description}`}
+                                        pathname: `/itemview/recent/${items.New_Property_Number}`,
+                                        params: {
+                                             desc: `${items.Description}`,
+                                        },
                                    });
                               }}
                          >
@@ -92,7 +91,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({ items, onClick }) => {
                                         items.New_Property_Number
                                    );
                                    console.log("Delete clicked");
-                                   dbFunc.deleteItem(items.New_Property_Number,items.Description);
+                                   dbFunc.deleteItem(
+                                        items.New_Property_Number,
+                                        items.Description
+                                   );
                                    onClick();
                               }}
                          >

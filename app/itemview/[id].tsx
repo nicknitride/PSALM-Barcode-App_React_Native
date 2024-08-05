@@ -10,6 +10,29 @@ import * as dbFunc from "../DatabaseFunctions";
 // https://stackoverflow.com/questions/78246345/react-native-usesearchparams-hook-from-expo-router
 // SQLITE Expo tutorial: https://github.com/chelseafarley/expo-sqlite-tutorial/blob/main/App.js
 
+function FormField(variable, variableName, setVariable) {
+     return (
+          <>
+               <View style={styles.card}>
+                    <ScrollView>
+                         <Text style={styles.cardTextHeading}>{variableName}: </Text>
+                         <TextInput
+                              multiline={true}
+                              placeholder={`${variable}`}
+                              textAlignVertical="top"
+                              numberOfLines={4}
+                              style={styles.input}
+                              value={variable}
+                              onChangeText={(change) => {
+                                   setVariable(change);
+                              }}
+                         />
+                    </ScrollView>
+               </View>
+          </>
+     );
+}
+
 export default function itemEditView() {
      const db = dbfunc.startDb();
      dbfunc.initDb();
@@ -33,6 +56,16 @@ export default function itemEditView() {
      }
      console.log("Corresponding Row: " + correspondingRow);
 
+     for (const key in correspondingRow) {
+          // console.log(`${key}: ${correspondingRow[key]}`)
+     }
+
+     const [Description, set_Description] = useState(correspondingRow?.Description)
+     const [Unit_of_Measure, set_Unit_of_Measure] = useState(correspondingRow?.Unit_of_Measure)
+     const [Unit_Value, set_Unit_Value] = useState(correspondingRow?.Unit_Value)
+     const [Quantity_per_Property_Card, set_Quantity_per_Property_Card] = useState(correspondingRow?.Quantity_per_Property_Card)
+     const [Quantity_per_Physical_Count, set_Quantity_per_Physical_Count] =useState(correspondingRow?.Quantity_per_Physical_Count)
+     const [Location_Whereabouts, set_Location_Whereabouts] = useState(correspondingRow?.Location_Whereabouts)
      const [condition, setCondition] = useState(correspondingRow?.Condition);
      const [remark, SetRemark] = useState(correspondingRow?.Remarks);
      return (
@@ -91,6 +124,11 @@ export default function itemEditView() {
                                                             }
                                                        </Text>
                                                   </View>
+                                                  {FormField(Unit_of_Measure, "Unit of Measure", set_Unit_of_Measure)}
+                                                  {FormField(Unit_Value, "Unit Value", set_Unit_Value)}
+                                                  {FormField(Quantity_per_Property_Card, "Quantity per Property Card", set_Quantity_per_Property_Card)}
+                                                  {FormField(Quantity_per_Physical_Count, "Quantity per Physical Count", set_Quantity_per_Physical_Count)}
+                                                  {FormField(Location_Whereabouts, "Location Whereabouts", set_Location_Whereabouts)}
                                                   <View style={styles.card}>
                                                        <Text
                                                             style={
@@ -184,11 +222,11 @@ export default function itemEditView() {
                                                        correspondingRow?.Description,
                                                        correspondingRow?.Old_Property_Number,
                                                        correspondingRow?.New_Property_Number,
-                                                       correspondingRow?.Unit_of_Measure,
-                                                       correspondingRow?.Unit_Value,
-                                                       correspondingRow?.Quantity_per_Property_Card,
-                                                       correspondingRow?.Quantity_per_Physical_Count,
-                                                       correspondingRow?.Location_Whereabouts,
+                                                       Unit_of_Measure,
+                                                       Unit_Value,
+                                                       Quantity_per_Property_Card,
+                                                       Quantity_per_Physical_Count,
+                                                       Location_Whereabouts,
                                                        condition,
                                                        remark
                                                   );

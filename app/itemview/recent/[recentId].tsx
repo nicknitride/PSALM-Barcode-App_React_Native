@@ -192,7 +192,7 @@ export default function itemEditView() {
                                                                       styles.input
                                                                  }
                                                                  value={
-                                                                      condition
+                                                                      Unit_Value
                                                                  }
                                                                  onChangeText={(
                                                                       change
@@ -401,11 +401,11 @@ export default function itemEditView() {
                                                        correspondingRow?.Description,
                                                        correspondingRow?.Old_Property_Number,
                                                        correspondingRow?.New_Property_Number,
-                                                       correspondingRow?.Unit_of_Measure,
-                                                       correspondingRow?.Unit_Value,
-                                                       correspondingRow?.Quantity_per_Property_Card,
-                                                       correspondingRow?.Quantity_per_Physical_Count,
-                                                       correspondingRow?.Location_Whereabouts,
+                                                       Unit_of_Measure,
+                                                       Unit_Value,
+                                                       Quantity_per_Property_Card,
+                                                       Quantity_per_Physical_Count,
+                                                       Location_Whereabouts,
                                                        condition,
                                                        remark
                                                   );
