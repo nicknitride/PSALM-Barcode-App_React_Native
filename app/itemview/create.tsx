@@ -55,9 +55,6 @@ export default function addItemPage() {
                                    />
                               </View>
                               <ScrollView>
-                                   <Text style={{ color: "black" }}>
-                                        We got {id}
-                                   </Text>
                                    <View style={{ alignItems: "center" }}>
                                         <View style={{ width: "100%" }}>
                                              <View style={styles.card}>
