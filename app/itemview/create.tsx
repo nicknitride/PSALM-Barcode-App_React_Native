@@ -68,7 +68,8 @@ export default function addItemPage() {
                                                   >
                                                        Article Item:
                                                   </Text>
-                                                  <TextInput
+                                                  <ScrollView> 
+                                                       <TextInput
                                                        value={Article_Item}
                                                        onChangeText={(
                                                             change
@@ -80,8 +81,8 @@ export default function addItemPage() {
                                                        style={styles.input}
                                                        multiline={true}
                                                        textAlignVertical="top"
-                                                       numberOfLines={2}
-                                                  />
+                                                       numberOfLines={4}
+                                                  /></ScrollView>
                                              </View>
                                              <View style={styles.card}>
                                                   <Text
@@ -323,7 +324,7 @@ const styles = StyleSheet.create({
           borderColor: "black",
           backgroundColor: "white",
           marginBottom: 10,
-          height: 5,
+          height: 55,
      },
      outerContainer: {
           flex: 1,
