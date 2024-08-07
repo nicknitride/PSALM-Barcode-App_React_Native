@@ -7,10 +7,15 @@
       "developmentClient": true,
       "distribution": "internal"
     },
-    "preview": {
+    "apk_build": {
       "distribution": "internal",
       "android":{
-      "buildType":"apk"
+      "buildType":"apk",
+      "gradleCommand": ":app:assembleRelease",
+      "developmentClient": true,
+      "env":{
+        "ANDROID_SDK_ROOT":"/Users/je/Library/Android/sdk"
+      }
     }
     },
     
