@@ -1,11 +1,10 @@
 import { View, Text, ScrollView, TextInput, StyleSheet } from "react-native";
 import Button from "../styled-components/Button";
 import { Stack, useLocalSearchParams } from "expo-router";
-import * as dbfunc from "../DatabaseFunctions";
+import * as dbFunc from "../DatabaseFunctions";
 import { dbEntry } from "../types";
 import { router } from "expo-router";
 import { useState } from "react";
-import * as dbFunc from "../DatabaseFunctions";
 
 // https://stackoverflow.com/questions/78246345/react-native-usesearchparams-hook-from-expo-router
 // SQLITE Expo tutorial: https://github.com/chelseafarley/expo-sqlite-tutorial/blob/main/App.js
@@ -15,7 +14,9 @@ function FormField(variable, variableName, setVariable) {
           <>
                <View style={styles.card}>
                     <ScrollView>
-                         <Text style={styles.cardTextHeading}>{variableName}: </Text>
+                         <Text style={styles.cardTextHeading}>
+                              {variableName}:{" "}
+                         </Text>
                          <TextInput
                               multiline={true}
                               placeholder={`${variable}`}
@@ -34,8 +35,8 @@ function FormField(variable, variableName, setVariable) {
 }
 
 export default function itemEditView() {
-     const db = dbfunc.startDb();
-     dbfunc.initDb();
+     const db = dbFunc.startDb();
+     dbFunc.initDb();
      const { id, desc } = useLocalSearchParams();
      let correspondingRow: any;
      const multiItemRow = db.getFirstSync<dbEntry>(
@@ -60,12 +61,22 @@ export default function itemEditView() {
           // console.log(`${key}: ${correspondingRow[key]}`)
      }
 
-     const [Description, set_Description] = useState(correspondingRow?.Description)
-     const [Unit_of_Measure, set_Unit_of_Measure] = useState(correspondingRow?.Unit_of_Measure)
-     const [Unit_Value, set_Unit_Value] = useState(correspondingRow?.Unit_Value)
-     const [Quantity_per_Property_Card, set_Quantity_per_Property_Card] = useState(correspondingRow?.Quantity_per_Property_Card)
-     const [Quantity_per_Physical_Count, set_Quantity_per_Physical_Count] =useState(correspondingRow?.Quantity_per_Physical_Count)
-     const [Location_Whereabouts, set_Location_Whereabouts] = useState(correspondingRow?.Location_Whereabouts)
+     const [Description, set_Description] = useState(
+          correspondingRow?.Description
+     );
+     const [Unit_of_Measure, set_Unit_of_Measure] = useState(
+          correspondingRow?.Unit_of_Measure
+     );
+     const [Unit_Value, set_Unit_Value] = useState(
+          correspondingRow?.Unit_Value
+     );
+     const [Quantity_per_Property_Card, set_Quantity_per_Property_Card] =
+          useState(correspondingRow?.Quantity_per_Property_Card);
+     const [Quantity_per_Physical_Count, set_Quantity_per_Physical_Count] =
+          useState(correspondingRow?.Quantity_per_Physical_Count);
+     const [Location_Whereabouts, set_Location_Whereabouts] = useState(
+          correspondingRow?.Location_Whereabouts
+     );
      const [condition, setCondition] = useState(correspondingRow?.Condition);
      const [remark, SetRemark] = useState(correspondingRow?.Remarks);
      return (
@@ -124,11 +135,31 @@ export default function itemEditView() {
                                                             }
                                                        </Text>
                                                   </View>
-                                                  {FormField(Unit_of_Measure, "Unit of Measure", set_Unit_of_Measure)}
-                                                  {FormField(Unit_Value, "Unit Value", set_Unit_Value)}
-                                                  {FormField(Quantity_per_Property_Card, "Quantity per Property Card", set_Quantity_per_Property_Card)}
-                                                  {FormField(Quantity_per_Physical_Count, "Quantity per Physical Count", set_Quantity_per_Physical_Count)}
-                                                  {FormField(Location_Whereabouts, "Location Whereabouts", set_Location_Whereabouts)}
+                                                  {FormField(
+                                                       Unit_of_Measure,
+                                                       "Unit of Measure",
+                                                       set_Unit_of_Measure
+                                                  )}
+                                                  {FormField(
+                                                       Unit_Value,
+                                                       "Unit Value",
+                                                       set_Unit_Value
+                                                  )}
+                                                  {FormField(
+                                                       Quantity_per_Property_Card,
+                                                       "Quantity per Property Card",
+                                                       set_Quantity_per_Property_Card
+                                                  )}
+                                                  {FormField(
+                                                       Quantity_per_Physical_Count,
+                                                       "Quantity per Physical Count",
+                                                       set_Quantity_per_Physical_Count
+                                                  )}
+                                                  {FormField(
+                                                       Location_Whereabouts,
+                                                       "Location Whereabouts",
+                                                       set_Location_Whereabouts
+                                                  )}
                                                   <View style={styles.card}>
                                                        <Text
                                                             style={
@@ -213,10 +244,6 @@ export default function itemEditView() {
                                              title="Submit"
                                              onPress={() => {
                                                   console.log("Submit Clicked");
-                                                  console.log(
-                                                       condition,
-                                                       remark
-                                                  );
                                                   dbFunc.insertToRecent(
                                                        correspondingRow?.Article_Item,
                                                        correspondingRow?.Description,
@@ -231,9 +258,13 @@ export default function itemEditView() {
                                                        remark
                                                   );
 
-                                                  router.push(
-                                                       "/(tabs)/InventoryList"
-                                                  );
+                                                  router.push({
+                                                       pathname: "/itemview/confirm_change",
+                                                       params: {
+                                                            id: `${id}`,
+                                                            action: `inserted`
+                                                       },
+                                                  });
                                              }}
                                         />
                                    </View>

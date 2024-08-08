@@ -31,9 +31,15 @@ export const ItemNoButton: React.FC<ItemCardProps> = ({items, onClick})=> {
                     <Text style={cardstyle.textStyle}>Old. Prop. Number: {items.Old_Property_Number}</Text>
                     <Text style={cardstyle.textStyle}>New. Prop. Number: {items.New_Property_Number}</Text>
                     <Text style={cardstyle.textStyle}>Description: {items.Description}</Text>
+                    <Text style={cardstyle.textStyle}>Unit of Measure: {items.Unit_of_Measure}</Text>
+                    <Text style={cardstyle.textStyle}>Unit Value: {items.Unit_Value}</Text>
+                    <Text style={cardstyle.textStyle}>Quantity per Property Card: {items.Quantity_per_Property_Card}</Text>
+                    <Text style={cardstyle.textStyle}>Quantity per Physical Count: {items.Quantity_per_Physical_Count}</Text>
+                    <Text style={cardstyle.textStyle}>Location Whereabouts: {items.Location_Whereabouts}</Text>
                     <Text style={cardstyle.textStyle}>Condition: {items.Condition}</Text>
                     <Text style={cardstyle.textStyle}>Remarks: {items.Remarks}</Text>
                </View>
+               <View></View>
           </>
      );
 }

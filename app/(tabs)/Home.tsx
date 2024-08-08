@@ -145,13 +145,19 @@ export default function App() {
                                         }}
                                    ></Button>
                               )}
-                              {itemListLength(QRValue) > 1 && (
+                              {itemListLength(QRValue) >= 1 && (
                                    <>
                                         <Text
                                              style={{
                                                   margin: 5,
                                                   fontSize: 20,
                                                   fontWeight: "bold",
+                                                  backgroundColor: "black",
+                                                  color: "white",
+                                                  marginBottom: 15,
+                                                  borderRadius: 20,
+                                                  padding: 20,
+                                                  marginRight: 15,
                                              }}
                                         >
                                              Detected Item no.: {QRValue}
@@ -169,49 +175,58 @@ export default function App() {
                                                   </>
                                              ))}
                                         </ScrollView>
-                                   </>
-                              )}
-
-                              {itemListLength(QRValue) === 1 && (
-                                   <View style={{ flexDirection: "row" }}>
-                                        <Button
-                                             title="Edit Detected Item"
-                                             onPress={() => {
-                                                  // console.log(
-                                                  //      "Submit clicked for: " +
-                                                  //           QRValue
-                                                  // );
-                                                  if (recentItemExists) {
-                                                       router.push(
-                                                            `/itemview/recent/${QRValue}`
-                                                       );
-                                                  } else {
-                                                       // console.log(`/itemview/${QRValue}`)
-                                                       router.push(
-                                                            `/itemview/${QRValue}`
-                                                       );
-                                                  }
-                                             }}
-                                        ></Button>
                                         <Button
                                              title="Scan Another Instead"
                                              onPress={() => {
                                                   setQRValue("");
                                              }}
                                         ></Button>
-                                   </View>
+                                   </>
                               )}
+
+                              {/* {itemListLength(QRValue) === 1 && (
+                                   <View>
+                                        <View style={{ flexDirection: "row" }}>
+                                             <Button
+                                                  title="Edit Detected Item"
+                                                  onPress={() => {
+                                                       // console.log(
+                                                       //      "Submit clicked for: " +
+                                                       //           QRValue
+                                                       // );
+                                                       if (recentItemExists) {
+                                                            router.push(
+                                                                 `/itemview/recent/${QRValue}`
+                                                            );
+                                                       } else {
+                                                            // console.log(`/itemview/${QRValue}`)
+                                                            router.push(
+                                                                 `/itemview/${QRValue}`
+                                                            );
+                                                       }
+                                                  }}
+                                             ></Button>
+                                             <Button
+                                                  title="Scan Another Instead"
+                                                  onPress={() => {
+                                                       setQRValue("");
+                                                  }}
+                                             ></Button>
+                                        </View>
+                                   </View>
+                              )} */}
 
                               {itemListLength(QRValue) === 0 && (
                                    <View>
                                         <Button
                                              title="Add New Scanned Item"
-                                             onPress={ () => {
+                                             onPress={() => {
                                                   router.push({
                                                        pathname: `itemview/create`,
-                                                       params: {id: `${QRValue}`}
-                                                  }
-                                                  )
+                                                       params: {
+                                                            id: `${QRValue}`,
+                                                       },
+                                                  });
                                              }}
                                         ></Button>
                                    </View>

@@ -409,9 +409,13 @@ export default function itemEditView() {
                                                        condition,
                                                        remark
                                                   );
-                                                  router.push(
-                                                       "/(tabs)/InventoryList"
-                                                  );
+                                                  router.push({
+                                                       pathname: "/itemview/confirm_change",
+                                                       params: {
+                                                            id: `${recentId}`,
+                                                            action: `updated`
+                                                       },
+                                                  });
                                              }}
                                         />
                                    </View>
