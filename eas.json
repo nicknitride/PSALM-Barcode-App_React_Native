@@ -14,14 +14,14 @@
       "gradleCommand": ":app:assembleRelease",
       "developmentClient": true,
       "env":{
-        "ANDROID_SDK_ROOT":"/Users/je/Library/Android/sdk"
+        "ANDROID_SDK_ROOT":"/Users/[USERNAME]/Library/Android/sdk"
       }
     }
     },
     
     "production": {
       "env":{
-        "ANDROID_SDK_ROOT":"/Users/je/Library/Android/sdk"
+        "ANDROID_SDK_ROOT":"/Users/[USERNAME]/Library/Android/sdk"
       }
     }
   },
