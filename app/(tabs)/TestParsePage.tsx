@@ -138,7 +138,8 @@ export default function TestParsePage() {
                               getFile();
                               console.log("Import clicked");
                          }}
-                    ></ImportCSVButton>
+                    >
+                    </ImportCSVButton>
                     <Button
                          title="Export CSV"
                          onPress={() => {

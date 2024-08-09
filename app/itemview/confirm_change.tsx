@@ -4,6 +4,7 @@ import { dbEntry } from "../types";
 import { View, Text, StyleSheet } from "react-native";
 import Button from "../styled-components/Button";
 import ItemNoButton from "../styled-components/ItemNoButton";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function confirm_change() {
      const { id, action } = useLocalSearchParams();
@@ -22,6 +23,7 @@ export default function confirm_change() {
                               <Stack.Screen
                                    options={{
                                         headerTitle: "Entry Confirmation",
+                                        headerBackVisible: false
                                    }}
                               />
                               <View style={styles.card}>
@@ -42,7 +44,11 @@ export default function confirm_change() {
                                    onPress={() => {
                                         router.navigate("/InventoryList");
                                    }}
-                              ></Button>
+                              ><FontAwesome
+                              size={25}
+                              name="list"
+                              color="white"
+                         /></Button>
                          </View>
                          <View style={{ width: "50%" }}>
                               <Button

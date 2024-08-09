@@ -137,32 +137,52 @@ export default function App() {
                {QRValue && (
                     <>
                          <View style={{ margin: 20 }}>
-                              {itemListLength(QRValue) !== 1 && (
-                                   <Button
-                                        title="Scan Another Instead"
-                                        onPress={() => {
-                                             setQRValue("");
-                                        }}
-                                   ></Button>
+                              {itemListLength(QRValue) == 0 && (
+                                   <View>
+                                        <View style={styles.card}>
+                                             <Text style={styles.cardTextBody}>
+                                                  Scanned Item is NOT PRESENT in
+                                                  the imported CSV file.
+                                                  Manually create new entry?
+                                             </Text>
+                                        </View>
+                                        <Button
+                                             title="Scan Another Instead"
+                                             onPress={() => {
+                                                  setQRValue("");
+                                             }}
+                                        ></Button>
+                                        <Button
+                                             title="Add New Scanned Item"
+                                             onPress={() => {
+                                                  router.push({
+                                                       pathname: `itemview/create`,
+                                                       params: {
+                                                            id: `${QRValue}`,
+                                                       },
+                                                  });
+                                             }}
+                                        ></Button>
+                                   </View>
                               )}
                               {itemListLength(QRValue) >= 1 && (
                                    <>
-                                        <Text
-                                             style={{
-                                                  margin: 5,
-                                                  fontSize: 20,
-                                                  fontWeight: "bold",
-                                                  backgroundColor: "black",
-                                                  color: "white",
-                                                  marginBottom: 15,
-                                                  borderRadius: 20,
-                                                  padding: 20,
-                                                  marginRight: 15,
-                                             }}
-                                        >
-                                             Detected Item no.: {QRValue}
-                                        </Text>
                                         <ScrollView>
+                                             <Text
+                                                  style={{
+                                                       margin: 5,
+                                                       fontSize: 20,
+                                                       fontWeight: "bold",
+                                                       backgroundColor: "black",
+                                                       color: "white",
+                                                       marginBottom: 15,
+                                                       borderRadius: 20,
+                                                       padding: 20,
+                                                       marginRight: 15,
+                                                  }}
+                                             >
+                                                  Detected Item no.: {QRValue}
+                                             </Text>
                                              {container.map((item) => (
                                                   <>
                                                        {/* {console.log(
@@ -215,22 +235,6 @@ export default function App() {
                                         </View>
                                    </View>
                               )} */}
-
-                              {itemListLength(QRValue) === 0 && (
-                                   <View>
-                                        <Button
-                                             title="Add New Scanned Item"
-                                             onPress={() => {
-                                                  router.push({
-                                                       pathname: `itemview/create`,
-                                                       params: {
-                                                            id: `${QRValue}`,
-                                                       },
-                                                  });
-                                             }}
-                                        ></Button>
-                                   </View>
-                              )}
                          </View>
                     </>
                )}
@@ -270,5 +274,17 @@ const styles = StyleSheet.create({
      innerContainer: {
           height: "80%",
           width: "80%",
+     },
+     card: {
+          backgroundColor: "black",
+          paddingHorizontal: 15,
+          paddingVertical: 5,
+          borderRadius: 20,
+          marginVertical: 10,
+     },
+     cardTextBody: {
+          color: "white",
+          fontSize: 19,
+          paddingBottom: 10,
      },
 });
